@@ -1,6 +1,8 @@
 {
   "name": "sbpjorApp",
-  "integrations": {},
+  "integrations": {
+    "cordova": {}
+  },
   "type": "angular",
   "id": "47fc71fd"
 }
