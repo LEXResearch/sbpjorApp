@@ -8,7 +8,7 @@
 
 <ion-content>
   <ion-grid no-padding>
-  <ion-slides (ionSlideDidChange)="slidePageChanged()" options="slideOpts">
+  <ion-slides options="slideOpts">
     <ion-slide>
       <ion-list lines="none">
         <ion-row justify-content-center class="ion-padding-bottom">
@@ -36,7 +36,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="itemTapped($event, atividade)"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -82,7 +82,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="itemTapped($event, atividade)"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -128,7 +128,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="itemTapped($event, atividade)"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -174,7 +174,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="itemTapped($event, atividade)"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -220,7 +220,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="itemTapped($event, atividade)"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 

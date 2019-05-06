@@ -12,11 +12,15 @@ const API_URL = 'https://sbpjor-lex.herokuapp.com/'; // api url
   providedIn: 'root'
 })
 export class ScheduleService {
+  atividades: any;
 
   constructor(private http: HttpClient, private networkService: NetworkService, private storage: Storage) { }
 
   getCronograma(forceRefresh: boolean = false): Observable<any>{
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      this.getLocalData('cronograma').then(res => {
+        this.atividades = res;
+      });
       return from(this.getLocalData('cronograma'));
     } else {
       return this.http.get(API_URL+'cronogramas/?format=json').pipe(
@@ -34,22 +38,14 @@ export class ScheduleService {
             return 0;
           });
           this.setLocalData('cronograma', results);
+          this.atividades = results;
         })
       );
     }
   }
 
-  getAtividade(forceRefresh: boolean = false): Observable<any>{
-    if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
-      return from(this.getLocalData('atividades'));
-    } else {
-      return this.http.get(API_URL+'atividades/?format=json').pipe(
-        map(results => results[0]),
-        tap(results => {
-          this.setLocalData('atividades', results);
-        })
-      );
-    }
+  getAtividade(id: number){
+    return this.atividades[id];
   }
 
   getMesas(forceRefresh: boolean = false): Observable<any>{

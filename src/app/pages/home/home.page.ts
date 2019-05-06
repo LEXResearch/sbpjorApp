@@ -1,6 +1,6 @@
 import { Platform, MenuController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
-
+import { Router } from '@angular/router';
 
 import { ScheduleService } from '../../services/schedule.service';
 
@@ -20,7 +20,7 @@ export class HomePage implements OnInit {
     spaceBetween: 100
   };
 
-  constructor(private scheduleService: ScheduleService, private plt: Platform, private menu: MenuController) { }
+  constructor(private scheduleService: ScheduleService, private plt: Platform, private menu: MenuController, private router: Router) { }
 
   ngOnInit() {
     this.plt.ready().then(() => {
@@ -62,6 +62,10 @@ export class HomePage implements OnInit {
             }
             return listItem;
         });
+  }
+
+  goToDescription(event, atividade){
+    this.router.navigate(['description', { id: atividade.id, data: atividade}]);
   }
 
 }
