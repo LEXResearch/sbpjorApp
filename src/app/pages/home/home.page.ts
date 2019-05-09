@@ -38,6 +38,10 @@ export class HomePage implements OnInit {
     });
   }
 
+  goDescription(id){
+    this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
+  }
+
   cronogramaByDay(day){
     return this.cronograma.filter((item) => {
       if (item.data != null)
@@ -62,10 +66,6 @@ export class HomePage implements OnInit {
             }
             return listItem;
         });
-  }
-
-  goToDescription(event, atividade){
-    this.router.navigate(['description', { id: atividade.id, data: atividade}]);
   }
 
 }

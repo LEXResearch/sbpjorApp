@@ -1,9 +1,80 @@
-<ion-header>
-  <ion-toolbar>
-    <ion-title>description</ion-title>
-  </ion-toolbar>
+<ion-header no-border>
+    <ion-toolbar>
+      <ion-buttons>
+        <ion-menu-button autoHide="false"></ion-menu-button>
+      </ion-buttons>
+    </ion-toolbar>
+
+
+  <div class="header" [ngStyle]="{'background-color': atividade.cor_hex }" padding >
+    <div class="title">{{ atividade.titulo }}</div>
+    <div class="hora" margin-top>
+      <ion-icon class="icons" name="watch"></ion-icon>
+      {{ hora(atividade.hora) }}h{{ min(atividade.hora)}}m
+    </div>
+    <div class="local">
+      <ion-icon class="icons" name="pin"></ion-icon>
+      {{ atividade.local }}
+    </div>
+  </div>
 </ion-header>
+<ion-content padding>
 
-<ion-content>
+  <ion-tabs>
+    <ion-tab-bar slot="top">
+      <ion-tab-button tab="mesa-livre">
+        <ion-label>MESAS LIVRES</ion-label>
+      </ion-tab-button>
+      <ion-tab-button tab="mesa-coordenada">
+        <ion-label>MESAS COORDENADAS</ion-label>
+      </ion-tab-button>
+    </ion-tab-bar>
+  </ion-tabs>
 
+  <!-- <div [ngSwitch]="tab">
+    <ion-list no-lines>
+      <ion-item *ngFor="let mesa of mesasFilter(true)">
+        <div>
+          <div class="numero" margin-bottom>
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="download" margin-top>
+            <button ion-button icon-start outline text-center padding (click)="pushButton($event, mesa)">
+              <ion-icon name="albums"></ion-icon>
+              Ver Trabalhos
+            </button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="false" no-lines>
+      <ion-item *ngFor="let mesa of mesasFilter(false)">
+        <div>
+          <div class="numero" margin-bottom>
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="download" margin-top>
+            <button ion-button icon-start outline text-center padding (click)="pushButton($event, mesa)">
+              <ion-icon name="albums"></ion-icon>
+              Ver Trabalhos
+            </button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div> -->
 </ion-content>

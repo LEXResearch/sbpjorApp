@@ -6,11 +6,33 @@ import { Routes, RouterModule } from '@angular/router';
 import { IonicModule } from '@ionic/angular';
 
 import { DescriptionPage } from './description.page';
+import { MesaCoordenadaPage } from './mesa-coordenada/mesa-coordenada.page';
+import { MesaLivrePage } from './mesa-livre/mesa-livre.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: DescriptionPage
+    component: DescriptionPage,
+    children: [
+      {
+        path: ":id",
+        children: [
+          {
+            path: 'mesa-livre',
+            component: MesaLivrePage
+          },
+          {
+            path: 'mesa-coordenada',
+            component: MesaCoordenadaPage
+          }
+        ]
+      }
+    ]
+  },
+  {
+    path: '',
+    redirectTo: '/description/1/mesa-livre',
+    pathMatch: 'full'
   }
 ];
 
@@ -21,6 +43,6 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [DescriptionPage]
+  declarations: [DescriptionPage, MesaCoordenadaPage, MesaLivrePage]
 })
 export class DescriptionPageModule {}

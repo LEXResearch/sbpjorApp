@@ -36,7 +36,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" href="/description/{{ atividade.categoria }}/mesa-coordenada" routerDirection="forward"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
