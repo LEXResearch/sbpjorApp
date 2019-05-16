@@ -18,10 +18,14 @@ export class DescriptionPage implements OnInit {
   constructor(private route: ActivatedRoute, private scheduleService: ScheduleService) { }
 
   ngOnInit() {
-    this.id = this.route.snapshot.paramMap.get("idActiviety");
+    this.id = this.route.snapshot.paramMap.get("id");
 
-    this.atividade = this.showActiviety(this.id);
-    console.log(this.atividade);
+    this.scheduleService.getCronograma(false).subscribe(res => {
+      this.atividade = this.showActiviety(this.id);
+      console.log(this.atividade);
+    });
+
+
   }
 
   showActiviety(id) {

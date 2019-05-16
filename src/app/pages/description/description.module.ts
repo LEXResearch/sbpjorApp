@@ -11,11 +11,11 @@ import { MesaLivrePage } from './mesa-livre/mesa-livre.page';
 
 const routes: Routes = [
   {
-    path: '',
+    path: ':id',
     component: DescriptionPage,
     children: [
       {
-        path: ":id",
+        path: '',
         children: [
           {
             path: 'mesa-livre',

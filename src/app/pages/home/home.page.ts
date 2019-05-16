@@ -31,7 +31,6 @@ export class HomePage implements OnInit {
   loadData(refresh = false, refresher?) {
     this.scheduleService.getCronograma(refresh).subscribe(res => {
       this.cronograma = res;
-      console.log(this.cronograma);
       if (refresher) {
         refresher.target.complete();
       }

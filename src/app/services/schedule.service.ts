@@ -44,12 +44,8 @@ export class ScheduleService {
     }
   }
 
-  getAtividade(id){
-    this.getLocalData('cronograma').then(res => {
-      this.atividades = res;
-      console.log(res);
-      return this.atividades.find((at) => (at.categoria === id));
-    });
+  getAtividade(id: number){
+    return this.atividades[id];
   }
 
   getMesas(forceRefresh: boolean = false): Observable<any>{
