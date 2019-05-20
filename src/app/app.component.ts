@@ -39,13 +39,13 @@ export class AppComponent {
   }
 
   appPages: PageInterface[] = [
-    { title: 'Início', name: 'HomePage', url: '/home', icon: 'custom-home', active: false },
-    { title: 'Cronograma', name: 'HomePage', url: '/home', icon: 'custom-cronograma', active: false },
-    { title: 'Pesquisa', name: 'SearchPage', url: '/search',   icon: 'custom-pesquisa', active: false },
-    { title: 'Trabalhos Favoritos', name: 'Favorite', url: '/favorite',   icon: 'custom-favoritos', active: false },
-    { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: 'custom-contato', active: false },
-    { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: 'custom-configuracao', active: true },
-    { title: 'Sobre', name: 'About', url: '/contact',   icon: 'custom-informacao', active: false },
+    { title: 'Início', name: 'HomePage', url: '/home', icon: '/assets/icon/home.svg', active: false },
+    { title: 'Cronograma', name: 'HomePage', url: '/home', icon: '/assets/icon/cronograma.svg', active: false },
+    { title: 'Pesquisa', name: 'SearchPage', url: '/search',   icon: '/assets/icon/pesquisa.svg', active: false },
+    { title: 'Trabalhos Favoritos', name: 'Favorite', url: '/favorite',   icon: '/assets/icon/favoritos.svg', active: false },
+    { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
+    { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
+    { title: 'Sobre', name: 'About', url: '/contact',   icon: '/assets/icon/info.svg', active: false },
   ]
 
   openPage(page){
