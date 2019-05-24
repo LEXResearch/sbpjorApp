@@ -11,6 +11,31 @@
   </ion-toolbar>
 </ion-header>
 
-<ion-content>
+<ion-content padding>
+<ion-item class="ion-margin-top">
+  <ion-label position="floating">Nome</ion-label>
+  <ion-input [(ngModel)]="nome" inputmode="latin-name" required></ion-input>
+</ion-item>
+
+<ion-item class="ion-margin-top">
+<ion-label position="floating">Email</ion-label>
+<ion-input [(ngModel)]="email" inputmode="email" required></ion-input>
+</ion-item>
+
+<ion-item class="ion-margin-top">
+<ion-label position="floating">Telefone</ion-label>
+<ion-input [(ngModel)]="telefone" inputmode="tel"></ion-input>
+</ion-item>
+
+<ion-item class="ion-margin-top">
+  <ion-label position="floating">Mensagem</ion-label>
+  <ion-textarea [(ngModel)]="mensagem" rows="7" required></ion-textarea>
+</ion-item>
+<ion-row class="ion-margin-top">
+  <ion-col>
+    <ion-button color="main" fill="outline" expand="block" (click)="sendMessage()"> Enviar mensagem </ion-button>
+  </ion-col>
+</ion-row>
+
 
 </ion-content>

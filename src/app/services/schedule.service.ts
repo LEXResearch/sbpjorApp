@@ -101,6 +101,28 @@ export class ScheduleService {
     this.setLocalData('favoritos', data);
   }
 
+
+  sendMessage(nome, email, tel, mensagem): Observable<any>{
+    // var headers = new Headers();
+    // headers.append("Accept", 'application/json');
+    // headers.append('Content-Type', 'application/json' );
+    // const requestOptions = new RequestOptions({ headers: headers });
+
+    let postData = {
+            "nome": nome,
+            "email": email,
+            "tel": tel,
+            "mensagem": mensagem
+    }
+
+    this.http.post(API_URL+"/contact", postData)
+      .subscribe(data => {
+        console.log(data['_body']);
+       }, error => {
+        console.log(error);
+      });
+  }
+
   private setLocalData(key, data) {
     this.storage.set(key, data);
   }
