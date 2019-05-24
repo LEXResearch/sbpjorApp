@@ -1,0 +1,91 @@
+.highlight{
+  box-sizing: border-box;
+  border: 2px solid #58595b;
+  width: 100px;
+}
+.text{
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 4px;
+}
+.number{
+  font-size: 35px;
+  font-weight: 700;
+}
+.text-active{
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: 6px;
+  padding-bottom: 5px;
+}
+.number-active{
+  font-size: 55px;
+  font-weight: 700;
+  padding-top: 5px;
+}
+.section-active {
+    transition: 0.5s linear;
+    height: auto;
+    color: #58595b;
+}
+.section {
+    height: 0 !important;
+    color: #58595b;
+    overflow: hidden;
+}
+.hora{
+  font-size: 16px;
+  font-weight: 600;
+  color: #58595b;
+  text-align: right;
+}
+
+.location-active {
+  font-size: 13px;
+  font-weight: 400;
+  color: #58595b;
+  text-align: left;
+}
+.location {
+  font-size: 13px;
+  font-weight: 400;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  text-align: left;
+  color: #58595b;
+}
+
+.title-active {
+  font-size: 16px;
+  font-weight: 600;
+  text-align: left;
+  color: #58595b;
+  white-space: initial;
+}
+.title {
+  font-size: 16px;
+  font-weight: 600;
+  text-overflow: ellipsis;
+  text-align: left;
+  overflow: hidden;
+  color: #58595b;
+}
+
+.my-button {
+  color: #58595b;
+  border: 2px solid #58595b;
+  width: 30px;
+  height: 30px;
+  background-color: white;
+}
+.navbar{
+  background: #58595b;
+}
+.description{
+  font-size: 14px;
+  text-align: justify;
+}
+
+.margin-top{
+  margin-top: 10px;
+}

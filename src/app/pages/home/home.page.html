@@ -1,0 +1,245 @@
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content>
+  <ion-grid no-padding>
+  <ion-slides options="slideOpts">
+    <ion-slide>
+      
+      <ion-list lines="none">
+        <ion-row justify-content-center class="ion-padding-bottom">
+          <ion-col size=4 align-self-center class="highlight">
+              <ion-row justify-content-center class="number-active">07</ion-row>
+              <ion-row justify-content-center class="text-active">QUA</ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let atividade of cronogramaByDay(7)" class="ion-margin-top" [ngStyle]=cor(atividade)>
+
+                <ion-col size=2>
+                  <ion-row><ion-col class="hora">{{ hora(atividade) }}h</ion-col></ion-row>
+                </ion-col>
+
+                <ion-col size=8>
+                  <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                  <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row>
+                  <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                    <ion-col>
+                      <ion-row>
+                        <br>
+
+                        {{ atividade.descricao }}
+
+                        <br><br>
+                      </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      </ion-row>
+                    </ion-col>
+
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size=2 class="ion-padding-end">
+                  <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                    <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                    <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                  </button>
+                </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list lines="none">
+        <ion-row justify-content-center class="ion-padding-bottom">
+          <ion-col size=4 align-self-center class="highlight">
+              <ion-row justify-content-center class="number-active">07</ion-row>
+              <ion-row justify-content-center class="text-active">QUA</ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let atividade of cronogramaByDay(8)" class="ion-margin-top" [ngStyle]=cor(atividade)>
+
+                <ion-col size=2>
+                  <ion-row><ion-col class="hora">{{ hora(atividade) }}h</ion-col></ion-row>
+                </ion-col>
+
+                <ion-col size=8>
+                  <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                  <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row>
+                  <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                    <ion-col>
+                      <ion-row>
+                        <br>
+
+                        {{ atividade.descricao }}
+
+                        <br><br>
+                      </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      </ion-row>
+                    </ion-col>
+
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size=2 class="ion-padding-end">
+                  <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                    <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                    <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                  </button>
+                </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list lines="none">
+        <ion-row justify-content-center class="ion-padding-bottom">
+          <ion-col size=4 align-self-center class="highlight">
+              <ion-row justify-content-center class="number-active">07</ion-row>
+              <ion-row justify-content-center class="text-active">QUA</ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let atividade of cronogramaByDay(9)" class="ion-margin-top" [ngStyle]=cor(atividade)>
+
+                <ion-col size=2>
+                  <ion-row><ion-col class="hora">{{ hora(atividade) }}h</ion-col></ion-row>
+                </ion-col>
+
+                <ion-col size=8>
+                  <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                  <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row>
+                  <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                    <ion-col>
+                      <ion-row>
+                        <br>
+
+                        {{ atividade.descricao }}
+
+                        <br><br>
+                      </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      </ion-row>
+                    </ion-col>
+
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size=2 class="ion-padding-end">
+                  <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                    <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                    <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                  </button>
+                </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list lines="none">
+        <ion-row justify-content-center class="ion-padding-bottom">
+          <ion-col size=4 align-self-center class="highlight">
+              <ion-row justify-content-center class="number-active">07</ion-row>
+              <ion-row justify-content-center class="text-active">QUA</ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let atividade of cronogramaByDay(12)" class="ion-margin-top" [ngStyle]=cor(atividade)>
+
+                <ion-col size=2>
+                  <ion-row><ion-col class="hora">{{ hora(atividade) }}h</ion-col></ion-row>
+                </ion-col>
+
+                <ion-col size=8>
+                  <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                  <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row>
+                  <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                    <ion-col>
+                      <ion-row>
+                        <br>
+
+                        {{ atividade.descricao }}
+
+                        <br><br>
+                      </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      </ion-row>
+                    </ion-col>
+
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size=2 class="ion-padding-end">
+                  <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                    <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                    <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                  </button>
+                </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </ion-slide>
+
+    <ion-slide>
+      <ion-list lines="none">
+        <ion-row justify-content-center class="ion-padding-bottom">
+          <ion-col size=4 align-self-center class="highlight">
+              <ion-row justify-content-center class="number-active">07</ion-row>
+              <ion-row justify-content-center class="text-active">QUA</ion-row>
+          </ion-col>
+        </ion-row>
+        <ion-row *ngFor="let atividade of cronogramaByDay(13)" class="ion-margin-top" [ngStyle]=cor(atividade)>
+
+                <ion-col size=2>
+                  <ion-row><ion-col class="hora">{{ hora(atividade) }}h</ion-col></ion-row>
+                </ion-col>
+
+                <ion-col size=8>
+                  <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                  <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row>
+                  <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                    <ion-col>
+                      <ion-row>
+                        <br>
+
+                        {{ atividade.descricao }}
+
+                        <br><br>
+                      </ion-row>
+                      <ion-row justify-content-center>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      </ion-row>
+                    </ion-col>
+
+
+                  </ion-row>
+                </ion-col>
+
+                <ion-col size=2 class="ion-padding-end">
+                  <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                    <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                    <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                  </button>
+                </ion-col>
+
+        </ion-row>
+      </ion-list>
+    </ion-slide>
+
+  </ion-slides>
+</ion-grid>
+</ion-content>
