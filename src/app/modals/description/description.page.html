@@ -1,0 +1,130 @@
+<ion-header no-border>
+    <ion-toolbar [color]="atividade.cor_nome">
+      <ion-button fill="clear" (click)="closeModal()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-toolbar>
+
+
+  <div class="header" [ngStyle]="{'background-color': atividade.cor_hex }" padding >
+    <div class="title">{{ atividade.titulo }}</div>
+    <div class="hora" margin-top>
+      <ion-icon style="font-size:18px;" name="watch"></ion-icon>
+      {{ hora(atividade.hora) }}h{{ min(atividade.hora)}}m
+    </div>
+    <div class="local">
+      <ion-icon style="font-size:18px;" name="pin"></ion-icon>
+      {{ atividade.local }}
+    </div>
+  </div>
+  <ion-segment [(ngModel)]="mesasMode" color="primary">
+    <ion-segment-button value="livres" style="width:50%; font-size:12px;">
+      <ion-label>MESAS LIVRES</ion-label>
+    </ion-segment-button>
+    <ion-segment-button value="coordenadas" style="width:50%; font-size:12px;">
+      <ion-label>MESAS COORDENADAS</ion-label>
+    </ion-segment-button>
+  </ion-segment>
+</ion-header>
+
+
+<ion-content>
+  <ion-row [ngSwitch]="mesasMode" class="ion-margin-start">
+
+    <ion-list *ngSwitchCase="'coordenadas'" lines="nones">
+      <h4 text-center *ngIf="!mesasFilter(true).length">Não há mesas coordenadas</h4>
+      <ion-item *ngFor="let mesa of mesasFilter(true)"  class="ion-margin-top">
+        <div>
+          <div class="numero ion-margin-bottom">
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="ion-margin-top">
+            <ion-button  color="main" fill="outline" (click)="pushButton($event, mesa)">
+              <ion-icon name="albums" class="ion-margin-end"></ion-icon>
+              Ver Trabalhos
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+
+    <ion-list *ngSwitchCase="'livres'" lines="none">
+      <h4 text-center *ngIf="!mesasFilter(false).length">Não há mesas livres</h4>
+      <ion-item *ngFor="let mesa of mesasFilter(false)"  class="ion-margin-top">
+        <div>
+          <div class="numero ion-margin-bottom">
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="ion-margin-top">
+            <ion-button color="main" fill="outline" (click)="pushButton($event, mesa)">
+              <ion-icon name="albums" class="ion-margin-end"></ion-icon>
+              Ver Trabalhos
+            </ion-button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </ion-row>
+
+
+  <!-- <div [ngSwitch]="tab">
+    <ion-list no-lines>
+      <ion-item *ngFor="let mesa of mesasFilter(true)">
+        <div>
+          <div class="numero" margin-bottom>
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="download" margin-top>
+            <button ion-button icon-start outline text-center padding (click)="pushButton($event, mesa)">
+              <ion-icon name="albums"></ion-icon>
+              Ver Trabalhos
+            </button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+    <ion-list *ngSwitchCase="false" no-lines>
+      <ion-item *ngFor="let mesa of mesasFilter(false)">
+        <div>
+          <div class="numero" margin-bottom>
+            MESA {{ mesa.numero }}
+          </div>
+          <div class="name" text-wrap>
+            {{ mesa.titulo }}
+          </div>
+          <br>
+          <div class="descricao">
+            {{ mesa.descricao }}
+          </div>
+          <div class="download" margin-top>
+            <button ion-button icon-start outline text-center padding (click)="pushButton($event, mesa)">
+              <ion-icon name="albums"></ion-icon>
+              Ver Trabalhos
+            </button>
+          </div>
+        </div>
+      </ion-item>
+    </ion-list>
+  </div> -->
+</ion-content>

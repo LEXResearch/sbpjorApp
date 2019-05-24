@@ -1,9 +1,32 @@
 <ion-header>
   <ion-toolbar>
-    <ion-title>favorite</ion-title>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+    <ion-row>
+      <div style="font-size: 20px; margin-left: 10px; font-weight: 400;">
+        Favoritos
+      </div>
+    </ion-row>
   </ion-toolbar>
 </ion-header>
 
 <ion-content>
-
+  <ion-list lines="none">
+    <ion-item *ngFor="let item of trabalhos">
+      <ion-row class="ion-margin-top">
+          <ion-col size=2 class="ion-margin-top">
+              <ion-icon (click)="favItem(item)" *ngIf="!item.favorito" name="star-outline"></ion-icon>
+              <ion-icon (click)="favItem(item)" *ngIf="item.favorito" name="star"></ion-icon>
+          </ion-col>
+          <ion-col size=8>
+            <div class="title">{{ item.titulo }}</div>
+            <div class="author">{{ item.autores }}</div>
+          </ion-col>
+          <ion-col size=2 class="ion-margin-top">
+            <ion-icon (click)="download(item)" margin-left name="download"></ion-icon>
+          </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-list>
 </ion-content>

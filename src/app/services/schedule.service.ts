@@ -13,6 +13,8 @@ const API_URL = 'https://sbpjor-lex.herokuapp.com/'; // api url
 })
 export class ScheduleService {
   atividades: any;
+  trabalhos: any;
+  favoritos: any;
 
   constructor(private http: HttpClient, private networkService: NetworkService, private storage: Storage) { }
 
@@ -63,23 +65,48 @@ export class ScheduleService {
 
   getTrabalhos(forceRefresh: boolean = false): Observable<any>{
     if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      console.log("entrou al");
       return from(this.getLocalData('trabalhos'));
     } else {
       return this.http.get(API_URL+'trabalhos/?format=json').pipe(
-        map(results => results[0]),
+        map(results => results),
         tap(results => {
+          console.log(results);
           this.setLocalData('trabalhos', results);
         })
       );
     }
   }
 
+  markFavoritos(){
+
+  }
+
+  // se tiver pefil, add a token
+  getFavoritos(forceRefresh: boolean = false): Observable<any>{
+    if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      return from(this.getLocalData('favoritos'));
+    } else {
+      return this.http.get(API_URL+'favoritos/?format=json').pipe(
+        map(results => results),
+        tap(results => {
+          console.log(results);
+          this.setLocalData('favoritos', results);
+        })
+      );
+    }
+  }
+
+  setFavoritos(data){
+    this.setLocalData('favoritos', data);
+  }
+
   private setLocalData(key, data) {
-    this.storage.set('${API_STORAGE_KEY}-${key}', data);
+    this.storage.set(key, data);
   }
 
   private getLocalData(key) {
-    return this.storage.get('${API_STORAGE_KEY}-${key}');
+    return this.storage.get(key);
   }
 
 }

@@ -10,6 +10,7 @@
   <ion-grid no-padding>
   <ion-slides options="slideOpts">
     <ion-slide>
+      
       <ion-list lines="none">
         <ion-row justify-content-center class="ion-padding-bottom">
           <ion-col size=4 align-self-center class="highlight">
@@ -36,7 +37,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" href="/description/{{ atividade.categoria }}/mesa-livre" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -82,7 +83,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -128,7 +129,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -174,7 +175,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 
@@ -220,7 +221,7 @@
                         <br><br>
                       </ion-row>
                       <ion-row justify-content-center>
-                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" [routerLink]="['/description/', atividade.categoria ]" routerDirection="forward"> Ver mesas </ion-button>
+                        <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                       </ion-row>
                     </ion-col>
 

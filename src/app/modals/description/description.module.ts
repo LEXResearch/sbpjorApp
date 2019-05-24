@@ -5,12 +5,13 @@ import { Routes, RouterModule } from '@angular/router';
 
 import { IonicModule } from '@ionic/angular';
 
-import { MesaCoordenadaPage } from './mesa-coordenada.page';
+import { DescriptionPage } from './description.page';
 
 const routes: Routes = [
   {
     path: '',
-    component: MesaCoordenadaPage
+    component: DescriptionPage,
+
   }
 ];
 
@@ -21,6 +22,7 @@ const routes: Routes = [
     IonicModule,
     RouterModule.forChild(routes)
   ],
-  declarations: [MesaCoordenadaPage]
+  declarations: [DescriptionPage],
+  exports: [DescriptionPage]
 })
-export class MesaCoordenadaPageModule {}
+export class DescriptionPageModule {}

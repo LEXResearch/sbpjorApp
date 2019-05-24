@@ -1,6 +1,8 @@
-import { Platform, MenuController } from '@ionic/angular';
+import { Platform, MenuController, ModalController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
+
+import { DescriptionPage } from '../../modals/description/description.page';
 
 import { ScheduleService } from '../../services/schedule.service';
 
@@ -20,7 +22,14 @@ export class HomePage implements OnInit {
     spaceBetween: 100
   };
 
-  constructor(private scheduleService: ScheduleService, private plt: Platform, private menu: MenuController, private router: Router) { }
+  dataReturned:any;
+
+  constructor(private scheduleService: ScheduleService,
+    private plt: Platform,
+    private menu: MenuController,
+    private router: Router,
+    public modalController: ModalController
+  ) { }
 
   ngOnInit() {
     this.plt.ready().then(() => {
@@ -28,9 +37,29 @@ export class HomePage implements OnInit {
     });
   }
 
+  async openModal(atividade) {
+    const modal = await this.modalController.create({
+      component: DescriptionPage,
+      componentProps: {
+        "atividade": atividade
+      },
+      showBackdrop: false,
+    });
+
+    modal.onDidDismiss().then((dataReturned) => {
+      if (dataReturned !== null) {
+        this.dataReturned = dataReturned.data;
+        //alert('Modal Sent Data :'+ dataReturned);
+      }
+    });
+
+    return await modal.present();
+  }
+
   loadData(refresh = false, refresher?) {
     this.scheduleService.getCronograma(refresh).subscribe(res => {
       this.cronograma = res;
+      console.log(res);
       if (refresher) {
         refresher.target.complete();
       }
@@ -40,6 +69,8 @@ export class HomePage implements OnInit {
   goDescription(id){
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
   }
+
+
 
   cronogramaByDay(day){
     return this.cronograma.filter((item) => {
