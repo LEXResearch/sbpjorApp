@@ -24,8 +24,8 @@ export class ContactPage implements OnInit {
   }
   sendMessage(){
     if(this.nome != null && this.email != null && this.mensagem != null && this.telefone != null){
-      console.log(this.nome);
-      //this.ScheduleService.sendMessage(this.name, this.emai, this.telefone, this.email);
+
+      this.scheduleService.sendMessage(this.nome, this.email, this.telefone, this.mensagem);
       this.presentToast("Mensagem enviada!");
     } else {
       this.presentToast("Ops! Informe todos os dados.");
@@ -36,7 +36,7 @@ export class ContactPage implements OnInit {
     const toast = await this.toastController.create({
       message: message,
       duration: 2000,
-      position: 'botton',
+      position: 'bottom',
     });
     toast.present();
   }

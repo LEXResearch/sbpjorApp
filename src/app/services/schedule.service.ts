@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable, from } from 'rxjs';
 import { NetworkService, ConnectionStatus } from './network.service';
 import { Storage } from '@ionic/storage';
@@ -102,7 +102,7 @@ export class ScheduleService {
   }
 
 
-  sendMessage(nome, email, tel, mensagem): Observable<any>{
+  sendMessage(nome, email, tel, mensagem){
     // var headers = new Headers();
     // headers.append("Accept", 'application/json');
     // headers.append('Content-Type', 'application/json' );
@@ -114,13 +114,27 @@ export class ScheduleService {
             "tel": tel,
             "mensagem": mensagem
     }
+    console.log(postData)
 
-    this.http.post(API_URL+"/contact", postData)
-      .subscribe(data => {
+    var headers = new HttpHeaders();
+    headers.append("Accept", 'application/json');
+    headers.append('Content-Type', 'application/json' );
+    //const requestOptions = new HttpRequestOptions({ headers: headers });
+
+    // this.http.post(API_URL+"/contato", postData).pipe(
+    //   map(results => results),
+    //   tap(results => {
+    //     console.log(results);
+    //   })
+    // )
+
+    this.http.post(API_URL+"contato", postData, { headers: headers }
+    ).subscribe(data => {
         console.log(data['_body']);
        }, error => {
         console.log(error);
       });
+    console.log("chamou")
   }
 
   private setLocalData(key, data) {
