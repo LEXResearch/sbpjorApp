@@ -14,10 +14,7 @@
       <ion-label>geral</ion-label>
     </ion-segment-button>
     <ion-segment-button value="titulo" style="font-size:12px;">
-      <ion-label>título</ion-label>
-    </ion-segment-button>
-    <ion-segment-button value="autor" style="font-size:12px;">
-      <ion-label>autor</ion-label>
+      <ion-label>favoritos</ion-label>
     </ion-segment-button>
   </ion-segment>
 </ion-header>
@@ -35,8 +32,14 @@
             <div class="author">{{ item.autores }}</div>
           </ion-col>
           <ion-col size=2 class="ion-margin-top">
-            <ion-icon (click)="download(item)" margin-left name="download"></ion-icon>
+           <!-- <ion-row style="padding-bottom: 10px">
+              <ion-icon (click)="download(item)" margin-left name="download"></ion-icon>
+            </ion-row> -->
+            <ion-row>
+              <ion-icon (click)="popAlert()" margin-left name="information-circle"></ion-icon>
+            </ion-row>
           </ion-col>
+
       </ion-row>
     </ion-item>
   </ion-list>

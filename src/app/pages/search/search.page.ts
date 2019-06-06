@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { ActionSheetController } from '@ionic/angular';
+import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { ScheduleService } from '../../services/schedule.service';
 
@@ -22,7 +22,8 @@ export class SearchPage implements OnInit {
   mesa: any;
 
   constructor(public actionSheetController: ActionSheetController,
-    private scheduleService: ScheduleService
+              private scheduleService: ScheduleService,
+              public alertController: AlertController
   ) { }
 
   ngOnInit() {
@@ -65,6 +66,42 @@ export class SearchPage implements OnInit {
   download(item) {
     //var browser = this.iab.create(item.url, '_system');
   }
+  
+
+  async popAlert() {
+    const alert = await this.alertController.create({
+      header: 'Confirm!',
+      subHeader: 'Subtitle',
+      message: 'Message <strong>text</strong>!!!',
+      buttons: [
+        {
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'secondary',
+          handler: (blah) => {
+            console.log('Confirm Cancel: blah');
+          }
+        }, {
+          text: 'Okay',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        },
+        {
+          text: 'Outros Trabalhos',
+          handler: () => {
+            console.log('Confirm Okay');
+          }
+        }
+      ]
+    });
+
+    await alert.present();
+  }
+  
+
+ 
+  
 
   searchData($event) {
     switch (this.searchMode) {
@@ -138,3 +175,4 @@ export class SearchPage implements OnInit {
   }
 
 }
+ 
