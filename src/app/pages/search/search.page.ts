@@ -28,6 +28,7 @@ export class SearchPage implements OnInit {
 
   ngOnInit() {
     this.getTrabalhos(true);
+    this.setTimeDelay();
   }
 
   getTrabalhos(refresh, refresher?) {
@@ -39,6 +40,11 @@ export class SearchPage implements OnInit {
         refresher.target.complete();
       }
     });
+  }
+
+  setTimeDelay(){
+    
+ 
   }
 
   favItem(item){
