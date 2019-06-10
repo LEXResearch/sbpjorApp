@@ -75,28 +75,40 @@ export class SearchPage implements OnInit {
       message: 'Message <strong>text</strong>!!!',
       buttons: [
         {
-          text: 'Cancel',
-          role: 'cancel',
-          cssClass: 'secondary',
-          handler: (blah) => {
-            console.log('Confirm Cancel: blah');
-          }
-        }, {
           text: 'Okay',
+          role: 'oKay',
+          cssClass: 'popUpSearch buttonPopUp1',
+          
+          
           handler: () => {
             console.log('Confirm Okay');
           }
         },
         {
-          text: 'Outros Trabalhos',
-          handler: () => {
-            console.log('Confirm Okay');
+          text: 'Cancel',
+          role: 'cancel',
+          cssClass: 'popUpSearch buttonPopUp2',
+         
+
+          handler: (blah) => {
+            console.log('Confirm Cancel: nah');
           }
+        },
+        {
+          text: 'Outros Trabalhos',
+          role: 'others',
+          cssClass: 'popUpSearch buttonPopUp3',
+          handler: () => {
+            console.log('Other things');
+          }
+          
         }
       ]
     });
 
     await alert.present();
+    let result = await alert.onDidDismiss();
+    console.log(result);
   }
   
 
