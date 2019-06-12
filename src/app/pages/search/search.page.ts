@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { ScheduleService } from '../../services/schedule.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-search',
@@ -23,12 +24,17 @@ export class SearchPage implements OnInit {
 
   constructor(public actionSheetController: ActionSheetController,
               private scheduleService: ScheduleService,
-              public alertController: AlertController
+              public alertController: AlertController,
+              private router: Router
   ) { }
 
   ngOnInit() {
     this.getTrabalhos(true);
-    this.setTimeDelay();
+    
+
+  }
+  goHome() {
+    this.router.navigateByUrl('/home');
   }
 
   getTrabalhos(refresh, refresher?) {
@@ -42,10 +48,7 @@ export class SearchPage implements OnInit {
     });
   }
 
-  setTimeDelay(){
-    
- 
-  }
+  
 
   favItem(item){
     const index = this.trabalhos.indexOf(item, 0);
