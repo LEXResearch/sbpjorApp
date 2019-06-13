@@ -2,7 +2,10 @@ import { Component, OnInit } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { ScheduleService } from '../../services/schedule.service';
+
 import { Router } from '@angular/router';
+import { LoadingController } from '@ionic/angular';
+
 
 @Component({
   selector: 'app-search',
@@ -25,17 +28,31 @@ export class SearchPage implements OnInit {
   constructor(public actionSheetController: ActionSheetController,
               private scheduleService: ScheduleService,
               public alertController: AlertController,
-              private router: Router
+              private router: Router,
+              public loadingController: LoadingController
   ) { }
 
   ngOnInit() {
     this.getTrabalhos(true);
-    
+    this.presentLoading();
 
   }
   goHome() {
     this.router.navigateByUrl('/home');
   }
+  //loading
+  async presentLoading() {
+    const loading = await this.loadingController.create({
+      message: 'Loading...',
+      duration: 1500
+    });
+    await loading.present();
+
+    const { role, data } = await loading.onDidDismiss();
+
+    console.log('Loading dismissed!');
+  }
+
 
   getTrabalhos(refresh, refresher?) {
     this.scheduleService.getTrabalhos(refresh).subscribe(res => {

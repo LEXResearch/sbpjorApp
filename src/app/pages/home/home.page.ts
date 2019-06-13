@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DescriptionPage } from '../../modals/description/description.page';
 
 import { ScheduleService } from '../../services/schedule.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -28,14 +29,31 @@ export class HomePage implements OnInit {
     private plt: Platform,
     private menu: MenuController,
     private router: Router,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public loadingController: LoadingController
+
   ) { }
 
   ngOnInit() {
     this.plt.ready().then(() => {
       this.loadData(true);
     });
+    this.presentLoadingWithOptions();
+    
   }
+  //loading 
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      duration: 1000,
+      message: 'Please wait...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
+
+
 
   async openModal(atividade) {
     const modal = await this.modalController.create({
