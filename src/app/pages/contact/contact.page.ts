@@ -9,7 +9,7 @@ import { ScheduleService } from '../../services/schedule.service';
   styleUrls: ['./contact.page.scss'],
 })
 export class ContactPage implements OnInit {
-  nome: string;
+  assunto: string;
   email: string;
   telefone: number;
   mensagem: string;
@@ -23,9 +23,8 @@ export class ContactPage implements OnInit {
 
   }
   sendMessage(){
-    if(this.nome != null && this.email != null && this.mensagem != null && this.telefone != null){
-
-      this.scheduleService.sendMessage(this.nome, this.email, this.telefone, this.mensagem);
+    if(this.assunto != null &&  this.mensagem != null){
+      this.scheduleService.getUserToken();
       this.presentToast("Mensagem enviada!");
     } else {
       this.presentToast("Ops! Informe todos os dados.");

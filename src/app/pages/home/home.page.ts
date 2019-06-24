@@ -5,6 +5,7 @@ import { Router } from '@angular/router';
 import { DescriptionPage } from '../../modals/description/description.page';
 
 import { ScheduleService } from '../../services/schedule.service';
+import { LoadingController } from '@ionic/angular';
 
 @Component({
   selector: 'app-home',
@@ -24,18 +25,36 @@ export class HomePage implements OnInit {
 
   dataReturned:any;
 
-  constructor(private scheduleService: ScheduleService,
+  constructor(
+    private scheduleService: ScheduleService,
     private plt: Platform,
     private menu: MenuController,
     private router: Router,
-    public modalController: ModalController
+    public modalController: ModalController,
+    public loadingController: LoadingController
+
   ) { }
 
   ngOnInit() {
     this.plt.ready().then(() => {
-      this.loadData(true);
+      // this.loadData(true);
     });
+    this.presentLoadingWithOptions();
+    
   }
+  //loading 
+  async presentLoadingWithOptions() {
+    const loading = await this.loadingController.create({
+      spinner: null,
+      duration: 2000,   //1000
+      message: 'Por favor espere...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await loading.present();
+  }
+
+
 
   async openModal(atividade) {
     const modal = await this.modalController.create({
@@ -56,15 +75,15 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  loadData(refresh = false, refresher?) {
-    this.scheduleService.getCronograma(refresh).subscribe(res => {
-      this.cronograma = res;
-      console.log(res);
-      if (refresher) {
-        refresher.target.complete();
-      }
-    });
-  }
+  // loadData(refresh = false, refresher?) {
+  //   this.scheduleService.getCronograma(refresh).subscribe(res => {
+  //     this.cronograma = res;
+  //     console.log(res);
+  //     if (refresher) {
+  //       refresher.target.complete();
+  //     }
+  //   });
+  // }
 
   goDescription(id){
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
