@@ -20,6 +20,8 @@ export class SearchPage implements OnInit {
 
   favoritos: Array<number>;
 
+  loading: any;
+
   searchMode: string = "geral";
   searchInput: string;
 
@@ -33,37 +35,43 @@ export class SearchPage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.getTrabalhos(true);
-    this.presentLoading();
+
+    // this.getTrabalhos(true);
+    //this.presentLoading();
 
   }
   goHome() {
     this.router.navigateByUrl('/home');
   }
   //loading
-  async presentLoading() {
-    const loading = await this.loadingController.create({
-      message: 'Loading...',
-      duration: 1500
-    });
-    await loading.present();
+  // async presentLoading() {
+  //   const 
+  //   await loading.present();
 
-    const { role, data } = await loading.onDidDismiss();
+  //   const { role, data } = await loading.onDidDismiss();
 
-    console.log('Loading dismissed!');
-  }
+  //   console.log('Loading dismissed!');
+  // }
 
 
-  getTrabalhos(refresh, refresher?) {
-    this.scheduleService.getTrabalhos(refresh).subscribe(res => {
-      this.trabalhos = res;
-      this.filteredTrabalhos = res;
-      console.log(res);
-      if (refresher) {
-        refresher.target.complete();
-      }
-    });
-  }
+  // async getTrabalhos(refresh, refresher?) {
+  //   this.loading = await this.loadingController.create({
+  //     message: 'Carregando...',
+  //         //1500
+  //     spinner: "crescent"
+  //   });
+  //   await this.loading.present();
+  //   this.scheduleService.getTrabalhos(refresh).subscribe(res => {
+  //     this.trabalhos = res;
+  //     this.filteredTrabalhos = res;
+  //     console.log(res);
+  //     if (refresher) {
+  //       refresher.target.complete();
+  //     }
+  //     this.loading.dismiss();
+
+  //   });
+  // }
 
   
 

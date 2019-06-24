@@ -25,7 +25,8 @@ export class HomePage implements OnInit {
 
   dataReturned:any;
 
-  constructor(private scheduleService: ScheduleService,
+  constructor(
+    private scheduleService: ScheduleService,
     private plt: Platform,
     private menu: MenuController,
     private router: Router,
@@ -36,7 +37,7 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.plt.ready().then(() => {
-      this.loadData(true);
+      // this.loadData(true);
     });
     this.presentLoadingWithOptions();
     
@@ -45,8 +46,8 @@ export class HomePage implements OnInit {
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
       spinner: null,
-      duration: 1000,
-      message: 'Please wait...',
+      duration: 2000,   //1000
+      message: 'Por favor espere...',
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });
@@ -74,15 +75,15 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  loadData(refresh = false, refresher?) {
-    this.scheduleService.getCronograma(refresh).subscribe(res => {
-      this.cronograma = res;
-      console.log(res);
-      if (refresher) {
-        refresher.target.complete();
-      }
-    });
-  }
+  // loadData(refresh = false, refresher?) {
+  //   this.scheduleService.getCronograma(refresh).subscribe(res => {
+  //     this.cronograma = res;
+  //     console.log(res);
+  //     if (refresher) {
+  //       refresher.target.complete();
+  //     }
+  //   });
+  // }
 
   goDescription(id){
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
