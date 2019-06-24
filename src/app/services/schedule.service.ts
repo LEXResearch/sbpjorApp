@@ -155,7 +155,7 @@ export class ScheduleService {
     //   })
     // )
 
-    this.http.post(API_URL+"login/", {'username':'capmayer', 'password':'sbFucks0cietY'}, { })
+    this.http.post(API_URL+"login/", {'username':'capmayer', 'password':''}, { })
      .then(data => {
       console.log(data);
     })
