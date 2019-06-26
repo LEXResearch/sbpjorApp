@@ -1,0 +1,34 @@
+
+app-login {
+    
+}
+
+$white-color: #fff;
+$height100: 100%;
+
+ion-grid {
+    width:100%;
+    height: $height100;
+    //background: #dfdfdf;
+    background: #fff;
+}
+
+ion-row {
+    height: $height100;
+}
+ion-button{
+    color: $white-color;
+}
+ion-col {
+    //border: 1px solid #488aff;
+    background: $white-color;
+}
+
+.loginDone {
+    color: #000;
+}
+.linkDecoration{
+    text-decoration: none; 
+    color: black; 
+    font-size:12px;
+}
