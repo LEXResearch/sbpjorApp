@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Observable, from } from 'rxjs';
 import { NetworkService, ConnectionStatus } from './network.service';
+import { LocaldataService } from './localdata.service';
 import { Storage } from '@ionic/storage';
 import { tap, map, catchError } from 'rxjs/operators';
 import { tokenKey } from '@angular/core/src/view';
@@ -14,15 +15,149 @@ const API_URL = 'https://sbpjor-server.herokuapp.com/api/'; // api url
   providedIn: 'root'
 })
 export class ScheduleService {
-  atividades: any;
+  cronograma: any;
   trabalhos: any;
-  favoritos: any;
+  mesas: any;
 
-  constructor(private http: HTTP, private networkService: NetworkService, private storage: Storage) { }
+  user: any;
+  tolken: any;
 
-  getCronograma(forceRefresh: boolean = false){
-    
+  constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
+
+  // make user authetication, recieve a token that is used for futher requests
+  authetication(user: string, password: any){
+    this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
+     .then(data => {
+
+       console.log(data);
+    })
+
+    .catch(error => {
+        console.log(error);
+    });
   }
+
+  registerUser(username: string, password: string){
+
+  }
+
+  registerAnon(){
+
+  }
+
+  reAuth(){
+
+  }
+
+  getCronograma(forceRefresh: boolean = false, tolken: string){
+    if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      this.getLocalData('cronograma').then(data => {
+        this.cronograma = data;
+        return this.cronograma;
+      });
+    }
+    else {
+      this.http.get(API_URL+"cronograma/?format=json", {}, {'Authorization': tolken })
+       .then(res => {
+         this.cronograma = res.data;
+         this.setLocalData('cronograma', res.data);
+      })
+      .catch(error => {
+          console.log(error);
+      });
+    }
+  }
+
+  getMesas(forceRefresh: boolean = false){
+    if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      this.getLocalData('mesas').then(data => {
+        this.mesas = data;
+        return this.mesas;
+      });
+    }
+    else {
+      this.http.get(API_URL+"mesa/?format=json", {}, {'Authorization': this.tolken })
+       .then(res => {
+         this.mesas = res.data;
+         this.setLocalData('mesas', res.data);
+      })
+      .catch(error => {
+          console.log(error);
+      });
+    }
+  }
+
+  getTrabalhos(forceRefresh: boolean = false){
+    if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
+      this.getLocalData('trabalhos').then(data => {
+        this.trabalhos = data;
+        return this.trabalhos;
+      });
+    }
+    else {
+      this.http.get(API_URL+"trabalho/?format=json", {}, {'Authorization': this.tolken })
+       .then(res => {
+         this.trabalhos = res.data;
+         this.setLocalData('trabalhos', res.data);
+      })
+      .catch(error => {
+         console.log(error);
+      });
+    }
+  }
+
+  sendMessage(assunto: string, message: string){
+    let data = { 'assunto': assunto, 'mensagem': message };
+    if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+      return false;
+    }
+    else {
+      this.http.post(API_URL+"contato/", data, {'Authorization': this.tolken })
+      .then(data => {
+        return true;
+      })
+      .catch(err => {
+        this.localService.storeRequest(API_URL+"contato/", data);
+        return false;
+      });
+    }
+  }
+
+  sendFavorito(trabalho: number){
+    let data = { 'user': this.user, 'trabalho': trabalho };
+    if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+      this.localService.storeRequest(API_URL+"favorito/", data);
+    }
+    else {
+      this.http.post(API_URL+"favorito/", data, {'Authorization': this.tolken })
+      .then(data => {
+        return true;
+      })
+      .catch(err => {
+        this.localService.storeRequest(API_URL+"favorito/", data);
+        return false;
+      });
+    }
+  }
+
+  sendDownload(trabalho: number){
+    let data = {'trabalho': trabalho }
+    if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+      this.localService.storeRequest(API_URL+"download/", data);
+    }
+    else {
+      this.http.post(API_URL+"download/", data, {'Authorization': this.tolken })
+      .then(data => {
+        return true;
+      })
+      .catch(err => {
+        this.localService.storeRequest(API_URL+"download/", data);
+        return false;
+      });
+    }
+  }
+
+
   //   if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
   //     this.getLocalData('cronograma').then(res => {
   //       this.atividades = res;
@@ -30,15 +165,15 @@ export class ScheduleService {
   //     return from(this.getLocalData('cronograma'));
   //   } else {
   //     //var headers = new HttpHeaders();
-      
-      
+
+
   //     var to = "JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImNhcG1heWVyIiwiZXhwIjoxNTYwOTU2ODU5LCJlbWFpbCI6ImhlbnJpcW1heWVyQGdtYWlsLmNvbSJ9.QbNDriiP44M3F3fMivHqQmBnlvOqihbUu2R_LkhF_HI";
-     
-      
+
+
   //     return this.http.get(API_URL+'cronograma/?format=json', {}, {}).pipe(
   //       map(results => results[0].atividades),
   //       tap(results => {
-          
+
   //         this.setLocalData('cronograma', results);
   //         this.atividades = results;
   //       })
@@ -46,9 +181,9 @@ export class ScheduleService {
   //   }
   // }
 
-  getAtividade(id: number){
-    return this.atividades[id];
-  }
+  // getAtividade(id: number){
+  //   return this.atividades[id];
+  // }
 
   // getMesas(forceRefresh: boolean = false): Observable<any>{
   //   if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
@@ -63,7 +198,7 @@ export class ScheduleService {
   //   }
   // }
 
-  getTrabalhos(forceRefresh: boolean = false){}
+  //getTrabalhos(forceRefresh: boolean = false){}
   //   if(this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh){
   //     console.log("entrou al");
   //     return from(this.getLocalData('trabalhos'));
@@ -97,9 +232,9 @@ export class ScheduleService {
   //   }
   // }
 
-  setFavoritos(data){
-    this.setLocalData('favoritos', data);
-  }
+  // setFavoritos(data){
+  //   this.setLocalData('favoritos', data);
+  // }
 
 
   // sendMessage(assunto, mensagem){
@@ -116,9 +251,9 @@ export class ScheduleService {
   //   }
   //   console.log(postData)
 
-    
 
-    
+
+
   //   headers.append("Accept", 'application/json');
   //   headers.append('Content-Type', 'application/json' );
   //   headers.append('Access-Control-Allow-Methods', 'POST' );
@@ -143,7 +278,7 @@ export class ScheduleService {
 
   getUserToken(){
 
-    
+
     //headers.append("Accept", 'application/json');
 
     //const requestOptions = new HttpRequestOptions({ headers: headers });
@@ -155,15 +290,7 @@ export class ScheduleService {
     //   })
     // )
 
-    this.http.post(API_URL+"login/", {'username':'capmayer', 'password':''}, { })
-     .then(data => {
-      console.log(data);
-    })
-    
-    .catch(error => {
-      console.log(error);
-    });   
-    console.log("chamou")
+
   }
 
   private setLocalData(key, data) {
