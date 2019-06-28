@@ -24,7 +24,7 @@ export class ContactPage implements OnInit {
   }
   sendMessage(){
     if(this.assunto != null &&  this.mensagem != null){
-      this.scheduleService.getCronograma(true, this.assunto);
+      this.scheduleService.sendMessage(this.assunto, this.mensagem);
       this.presentToast("Mensagem enviada!");
     } else {
       this.presentToast("Ops! Informe todos os dados.");
