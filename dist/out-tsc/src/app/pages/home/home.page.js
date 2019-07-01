@@ -13,7 +13,6 @@ var HomePage = /** @class */ (function () {
         this.router = router;
         this.modalController = modalController;
         this.loadingController = loadingController;
-        this.cronograma = [];
         this.slideOpts = {
             speed: 1000,
             centeredSlides: true,
@@ -22,8 +21,9 @@ var HomePage = /** @class */ (function () {
         };
     }
     HomePage.prototype.ngOnInit = function () {
+        var _this = this;
         this.plt.ready().then(function () {
-            // this.loadData(true);
+            _this.getCronograma();
         });
         this.presentLoadingWithOptions();
     };
@@ -87,27 +87,12 @@ var HomePage = /** @class */ (function () {
     HomePage.prototype.goDescription = function (id) {
         this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
     };
-    HomePage.prototype.cronogramaByDay = function (day) {
-        return this.cronograma.filter(function (item) {
-            if (item.data != null)
-                return item.data.split('-')[2] == day;
-        });
-    };
-    HomePage.prototype.hora = function (item) {
-        return item.hora.split('T')[1].split(":")[0];
-    };
-    HomePage.prototype.cor = function (atividade) {
-        return { 'background': 'linear-gradient(90deg, ' + atividade.cor_hex + ' 15px, #FFFFFF 15px)' };
-    };
-    HomePage.prototype.expandItem = function (item) {
-        this.cronograma.map(function (listItem) {
-            if (item == listItem) {
-                listItem.open = !listItem.open;
-            }
-            else {
-                listItem.open = false;
-            }
-            return listItem;
+    HomePage.prototype.getCronograma = function () {
+        var _this = this;
+        this.scheduleService.getCronograma().then(function (data) {
+            _this.cronograma = data;
+            console.log(data);
+            console.log("homepage");
         });
     };
     HomePage = tslib_1.__decorate([

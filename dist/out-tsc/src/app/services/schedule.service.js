@@ -12,14 +12,16 @@ var ScheduleService = /** @class */ (function () {
         this.networkService = networkService;
         this.localService = localService;
         this.storage = storage;
+        this.token = '';
     }
     // make user authetication, recieve a token that is used for futher requests
     ScheduleService.prototype.authetication = function (user, password) {
         var _this = this;
         return this.http.post(API_URL + "login/", { 'username': user, 'password': password }, {})
             .then(function (data) {
-            console.log(data.data['token']);
-            _this.token = data.data['token'];
+            var d = JSON.parse(data.data);
+            console.log(d.token);
+            _this.token = "JWT " + d.token;
             _this.setLocalData('token', _this.token);
         })
             .catch(function (error) {
@@ -27,69 +29,78 @@ var ScheduleService = /** @class */ (function () {
     };
     ScheduleService.prototype.registerUser = function (username, password) {
     };
-    ScheduleService.prototype.registerAnon = function () {
+    ScheduleService.prototype.registerAnon = function (imei) {
     };
     ScheduleService.prototype.reAuth = function () {
     };
     ScheduleService.prototype.getCronograma = function (forceRefresh) {
         var _this = this;
-        if (forceRefresh === void 0) { forceRefresh = false; }
-        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            this.getLocalData('cronograma').then(function (data) {
-                _this.cronograma = data;
-                return _this.cronograma;
-            });
-        }
-        else {
-            this.http.get(API_URL + "cronograma/?format=json", {}, { 'Authorization': this.token })
-                .then(function (res) {
-                _this.cronograma = res.data;
-                _this.setLocalData('cronograma', res.data);
-            })
-                .catch(function (error) {
-                console.log(error);
-            });
-        }
+        if (forceRefresh === void 0) { forceRefresh = true; }
+        return new Promise(function (resolve, reject) {
+            if (!forceRefresh) {
+                _this.getLocalData('cronograma').then(function (data) {
+                    _this.cronograma = data;
+                    resolve(_this.cronograma);
+                });
+            }
+            else {
+                _this.http.get(API_URL + "cronograma/?format=json", {}, { 'Authorization': _this.token })
+                    .then(function (res) {
+                    _this.cronograma = res.data;
+                    _this.setLocalData('cronograma', res.data);
+                    resolve(_this.cronograma);
+                })
+                    .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
     };
     ScheduleService.prototype.getMesas = function (forceRefresh) {
         var _this = this;
         if (forceRefresh === void 0) { forceRefresh = false; }
-        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            this.getLocalData('mesas').then(function (data) {
-                _this.mesas = data;
-                return _this.mesas;
-            });
-        }
-        else {
-            this.http.get(API_URL + "mesa/?format=json", {}, { 'Authorization': this.token })
-                .then(function (res) {
-                _this.mesas = res.data;
-                _this.setLocalData('mesas', res.data);
-            })
-                .catch(function (error) {
-                console.log(error);
-            });
-        }
+        return new Promise(function (resolve, reject) {
+            if (!forceRefresh) {
+                _this.getLocalData('cronograma').then(function (data) {
+                    _this.cronograma = data;
+                    resolve(_this.cronograma);
+                });
+            }
+            else {
+                _this.http.get(API_URL + "cronograma/?format=json", {}, { 'Authorization': _this.token })
+                    .then(function (res) {
+                    _this.cronograma = res.data;
+                    _this.setLocalData('cronograma', res.data);
+                    resolve(_this.cronograma);
+                })
+                    .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
     };
     ScheduleService.prototype.getTrabalhos = function (forceRefresh) {
         var _this = this;
         if (forceRefresh === void 0) { forceRefresh = false; }
-        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            this.getLocalData('trabalhos').then(function (data) {
-                _this.trabalhos = data;
-                return _this.trabalhos;
-            });
-        }
-        else {
-            this.http.get(API_URL + "trabalho/?format=json", {}, { 'Authorization': this.token })
-                .then(function (res) {
-                _this.trabalhos = res.data;
-                _this.setLocalData('trabalhos', res.data);
-            })
-                .catch(function (error) {
-                console.log(error);
-            });
-        }
+        return new Promise(function (resolve, reject) {
+            if (!forceRefresh) {
+                _this.getLocalData('cronograma').then(function (data) {
+                    _this.cronograma = data;
+                    resolve(_this.cronograma);
+                });
+            }
+            else {
+                _this.http.get(API_URL + "cronograma/?format=json", {}, { 'Authorization': _this.token })
+                    .then(function (res) {
+                    _this.cronograma = res.data;
+                    _this.setLocalData('cronograma', res.data);
+                    resolve(_this.cronograma);
+                })
+                    .catch(function (error) {
+                    console.log(error);
+                });
+            }
+        });
     };
     ScheduleService.prototype.sendMessage = function (assunto, message) {
         var _this = this;

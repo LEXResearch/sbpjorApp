@@ -1,9 +1,11 @@
 import * as tslib_1 from "tslib";
-import { Component } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { ActionSheetController, AlertController } from '@ionic/angular';
 import { ScheduleService } from '../../services/schedule.service';
 import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
+//
+import { IonInfiniteScroll } from '@ionic/angular';
 var SearchPage = /** @class */ (function () {
     function SearchPage(actionSheetController, scheduleService, alertController, router, loadingController) {
         this.actionSheetController = actionSheetController;
@@ -200,6 +202,25 @@ var SearchPage = /** @class */ (function () {
             });
         });
     };
+    SearchPage.prototype.loadData = function (event) {
+        var _this = this;
+        setTimeout(function () {
+            console.log('Done');
+            event.target.complete();
+            // App logic to determine if all data is loaded
+            // and disable the infinite scroll
+            if (_this.data.length == 1) {
+                event.target.disabled = true;
+            }
+        }, 500);
+    };
+    SearchPage.prototype.toggleInfiniteScroll = function () {
+        this.infiniteScroll.disabled = !this.infiniteScroll.disabled;
+    };
+    tslib_1.__decorate([
+        ViewChild(IonInfiniteScroll),
+        tslib_1.__metadata("design:type", IonInfiniteScroll)
+    ], SearchPage.prototype, "infiniteScroll", void 0);
     SearchPage = tslib_1.__decorate([
         Component({
             selector: 'app-search',
