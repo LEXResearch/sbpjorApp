@@ -26,6 +26,7 @@ export class LoginPage implements OnInit {
     if(this.usuario != null && this.password != null){
       this.service.authetication(this.usuario, this.password).then(d => {
         console.log("foii");
+        console.log(d);
         this.router.navigateByUrl('/home');
       }).catch( d => {
         console.log("fodeu");

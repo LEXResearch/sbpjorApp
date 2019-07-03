@@ -11,7 +11,7 @@ var ContactPage = /** @class */ (function () {
     };
     ContactPage.prototype.sendMessage = function () {
         if (this.assunto != null && this.mensagem != null) {
-            this.scheduleService.getCronograma(true, this.assunto);
+            this.scheduleService.sendMessage(this.assunto, this.mensagem);
             this.presentToast("Mensagem enviada!");
         }
         else {
