@@ -51,19 +51,17 @@ export class ScheduleService {
 
   }
 
-  getCronograma(forceRefresh: boolean = true){
+  getMethod(what: string, forceRefresh: boolean = false){
     return new Promise((resolve, reject) => {
       if(!forceRefresh){
-        this.getLocalData('cronograma').then(data => {
-          this.cronograma = data;
+        this.getLocalData(what).then(data => {
           resolve(this.cronograma);
         });
       }
       else {
-        this.http.get(API_URL+"cronograma/?format=json", {}, {'Authorization': this.token })
+        this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
          .then(res => {
-           this.cronograma = res.data;
-           this.setLocalData('cronograma', res.data);
+           this.setLocalData(what, res.data);
            resolve(this.cronograma);
         })
         .catch(error => {
@@ -71,50 +69,69 @@ export class ScheduleService {
         });
       }
     })
+  }
+
+  getCronograma(forceRefresh: boolean = true){
+    if(this.token != null){
+      return new Promise((resolve, rjc) => {
+        this.getMethod('cronograma', forceRefresh).then(data => {
+          this.cronograma = data;
+          resolve(this.cronograma);
+        })
+      })
+    } else {
+      this.getLocalData('token').then(data => {
+        this.token = data;
+        return new Promise((resolve, rjc) => {
+          this.getMethod('crograma', forceRefresh).then(data=>{
+            this.cronograma = data;
+            resolve(data);
+          })
+        })
+      })
+    }
   }
 
   getMesas(forceRefresh: boolean = false){
-    return new Promise((resolve, reject) => {
-      if(!forceRefresh){
-        this.getLocalData('cronograma').then(data => {
-          this.cronograma = data;
-          resolve(this.cronograma);
-        });
-      }
-      else {
-        this.http.get(API_URL+"cronograma/?format=json", {}, {'Authorization': this.token })
-         .then(res => {
-           this.cronograma = res.data;
-           this.setLocalData('cronograma', res.data);
-           resolve(this.cronograma);
+    if(this.token != null){
+      return new Promise((resolve, rjc) => {
+        this.getMethod('mesa', forceRefresh).then(data => {
+          this.mesas = data;
+          resolve(this.mesas);
         })
-        .catch(error => {
-            console.log(error);
-        });
-      }
-    })
+      })
+    } else {
+      this.getLocalData('token').then(data => {
+        this.token = data;
+        return new Promise((resolve, rjc) => {
+          this.getMethod('mesa', forceRefresh).then(data=>{
+            this.mesas = data;
+            resolve(data);
+          })
+        })
+      })
+    }
   }
 
   getTrabalhos(forceRefresh: boolean = false){
-    return new Promise((resolve, reject) => {
-      if(!forceRefresh){
-        this.getLocalData('cronograma').then(data => {
-          this.cronograma = data;
-          resolve(this.cronograma);
-        });
-      }
-      else {
-        this.http.get(API_URL+"cronograma/?format=json", {}, {'Authorization': this.token })
-         .then(res => {
-           this.cronograma = res.data;
-           this.setLocalData('cronograma', res.data);
-           resolve(this.cronograma);
+    if(this.token != null){
+      return new Promise((resolve, rjc) => {
+        this.getMethod('trabalho', forceRefresh).then(data => {
+          this.trabalhos = data;
+          resolve(this.mesas);
         })
-        .catch(error => {
-            console.log(error);
-        });
-      }
-    })
+      })
+    } else {
+      this.getLocalData('token').then(data => {
+        this.token = data;
+        return new Promise((resolve, rjc) => {
+          this.getMethod('trabalho', forceRefresh).then(data=>{
+            this.trabalhos = data;
+            resolve(data);
+          })
+        })
+      })
+    }
   }
 
   sendMessage(assunto: string, message: string){
