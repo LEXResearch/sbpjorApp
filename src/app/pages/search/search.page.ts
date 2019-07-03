@@ -7,13 +7,16 @@ import { Router } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
 
+
+
+
 @Component({
   selector: 'app-search',
   templateUrl: './search.page.html',
   styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
-
+  
   trabalhos: any;
 
   filteredTrabalhos: any;
@@ -220,5 +223,33 @@ export class SearchPage implements OnInit {
     await actionSheet.present();
   }
 
+
+// Infinity scroll 
+items: Array <any>=[] ;  
+
+loadData(event) {
+  setTimeout(() => {
+    console.log('Done');
+    this.addMoreItems();
+
+    event.target.complete();
+
+    
+  }, 800);
 }
+
+addMoreItems() {
+  for (let i=0; i<3; i++)
+    this.items.push(i);
+}
+
+// ends here
+
+
+}
+
+
+
  
+
+

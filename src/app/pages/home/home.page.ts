@@ -14,7 +14,7 @@ import { LoadingController } from '@ionic/angular';
 })
 export class HomePage implements OnInit {
 
-  cronograma: Array<any> = [];
+  cronograma: any;
 
   slideOpts = {
     speed: 1000,
@@ -37,10 +37,9 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.plt.ready().then(() => {
-      // this.loadData(true);
+      this.getCronograma()
     });
     this.presentLoadingWithOptions();
-    
   }
   //loading 
   async presentLoadingWithOptions() {
@@ -89,32 +88,40 @@ export class HomePage implements OnInit {
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
   }
 
-
-
-  cronogramaByDay(day){
-    return this.cronograma.filter((item) => {
-      if (item.data != null)
-       return item.data.split('-')[2] == day;
+  getCronograma(){
+    this.scheduleService.getCronograma().then(data => {
+      this.cronograma = data;
+      console.log(data);
+      console.log("homepage");
     });
   }
 
-  hora(item){
-    return item.hora.split('T')[1].split(":")[0];
-  }
 
-  cor(atividade){
-    return {'background': 'linear-gradient(90deg, '+ atividade.cor_hex +' 15px, #FFFFFF 15px)'};
-  }
 
-  expandItem(item){
-        this.cronograma.map((listItem) => {
-            if(item == listItem){
-                listItem.open = !listItem.open;
-            } else {
-                listItem.open = false;
-            }
-            return listItem;
-        });
-  }
+  // cronogramaByDay(day){
+  //   return this.cronograma.filter((item) => {
+  //     if (item.data != null)
+  //      return item.data.split('-')[2] == day;
+  //   });
+  // }
+
+  // hora(item){
+  //   return item.hora.split('T')[1].split(":")[0];
+  // }
+
+  // cor(atividade){
+  //   return {'background': 'linear-gradient(90deg, '+ atividade.cor_hex +' 15px, #FFFFFF 15px)'};
+  // }
+
+  // expandItem(item){
+  //       this.cronograma.map((listItem) => {
+  //           if(item == listItem){
+  //               listItem.open = !listItem.open;
+  //           } else {
+  //               listItem.open = false;
+  //           }
+  //           return listItem;
+  //       });
+  // }
 
 }

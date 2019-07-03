@@ -4,14 +4,15 @@ import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { DescriptionPage } from '../../modals/description/description.page';
 import { ScheduleService } from '../../services/schedule.service';
+import { LoadingController } from '@ionic/angular';
 var HomePage = /** @class */ (function () {
-    function HomePage(scheduleService, plt, menu, router, modalController) {
+    function HomePage(scheduleService, plt, menu, router, modalController, loadingController) {
         this.scheduleService = scheduleService;
         this.plt = plt;
         this.menu = menu;
         this.router = router;
         this.modalController = modalController;
-        this.cronograma = [];
+        this.loadingController = loadingController;
         this.slideOpts = {
             speed: 1000,
             centeredSlides: true,
@@ -22,7 +23,29 @@ var HomePage = /** @class */ (function () {
     HomePage.prototype.ngOnInit = function () {
         var _this = this;
         this.plt.ready().then(function () {
-            _this.loadData(true);
+            _this.getCronograma();
+        });
+        this.presentLoadingWithOptions();
+    };
+    //loading 
+    HomePage.prototype.presentLoadingWithOptions = function () {
+        return tslib_1.__awaiter(this, void 0, void 0, function () {
+            var loading;
+            return tslib_1.__generator(this, function (_a) {
+                switch (_a.label) {
+                    case 0: return [4 /*yield*/, this.loadingController.create({
+                            spinner: null,
+                            duration: 2000,
+                            message: 'Por favor espere...',
+                            translucent: true,
+                            cssClass: 'custom-class custom-loading'
+                        })];
+                    case 1:
+                        loading = _a.sent();
+                        return [4 /*yield*/, loading.present()];
+                    case 2: return [2 /*return*/, _a.sent()];
+                }
+            });
         });
     };
     HomePage.prototype.openModal = function (atividade) {
@@ -52,41 +75,24 @@ var HomePage = /** @class */ (function () {
             });
         });
     };
-    HomePage.prototype.loadData = function (refresh, refresher) {
-        var _this = this;
-        if (refresh === void 0) { refresh = false; }
-        this.scheduleService.getCronograma(refresh).subscribe(function (res) {
-            _this.cronograma = res;
-            console.log(res);
-            if (refresher) {
-                refresher.target.complete();
-            }
-        });
-    };
+    // loadData(refresh = false, refresher?) {
+    //   this.scheduleService.getCronograma(refresh).subscribe(res => {
+    //     this.cronograma = res;
+    //     console.log(res);
+    //     if (refresher) {
+    //       refresher.target.complete();
+    //     }
+    //   });
+    // }
     HomePage.prototype.goDescription = function (id) {
         this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
     };
-    HomePage.prototype.cronogramaByDay = function (day) {
-        return this.cronograma.filter(function (item) {
-            if (item.data != null)
-                return item.data.split('-')[2] == day;
-        });
-    };
-    HomePage.prototype.hora = function (item) {
-        return item.hora.split('T')[1].split(":")[0];
-    };
-    HomePage.prototype.cor = function (atividade) {
-        return { 'background': 'linear-gradient(90deg, ' + atividade.cor_hex + ' 15px, #FFFFFF 15px)' };
-    };
-    HomePage.prototype.expandItem = function (item) {
-        this.cronograma.map(function (listItem) {
-            if (item == listItem) {
-                listItem.open = !listItem.open;
-            }
-            else {
-                listItem.open = false;
-            }
-            return listItem;
+    HomePage.prototype.getCronograma = function () {
+        var _this = this;
+        this.scheduleService.getCronograma().then(function (data) {
+            _this.cronograma = data;
+            console.log(data);
+            console.log("homepage");
         });
     };
     HomePage = tslib_1.__decorate([
@@ -99,7 +105,8 @@ var HomePage = /** @class */ (function () {
             Platform,
             MenuController,
             Router,
-            ModalController])
+            ModalController,
+            LoadingController])
     ], HomePage);
     return HomePage;
 }());
