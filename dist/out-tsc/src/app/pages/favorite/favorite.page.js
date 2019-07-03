@@ -9,17 +9,16 @@ var FavoritePage = /** @class */ (function () {
         this.getTrabalhos(true);
     };
     FavoritePage.prototype.getTrabalhos = function (refresh, refresher) {
-        var _this = this;
-        this.scheduleService.getTrabalhos(refresh).subscribe(function (res) {
-            _this.trabalhos = res;
-            _this.trabalhos = _this.trabalhos.filter(function (item) {
-                return item.favorito == true;
-            });
-            console.log(res);
-            if (refresher) {
-                refresher.target.complete();
-            }
-        });
+        // this.scheduleService.getTrabalhos(refresh).subscribe(res => {
+        //   this.trabalhos = res;
+        //   this.trabalhos = this.trabalhos.filter((item) => {
+        //      return item.favorito == true;
+        //   });
+        //   console.log(res);
+        //   if (refresher) {
+        //     refresher.target.complete();
+        //   }
+        // });
     };
     FavoritePage.prototype.favItem = function (item) {
         var index = this.trabalhos.indexOf(item, 0);

@@ -9,6 +9,10 @@ const routes: Routes = [
   { path: 'favorite', loadChildren: './pages/favorite/favorite.module#FavoritePageModule' },
   { path: 'about', loadChildren: './pages/about/about.module#AboutPageModule' },
   { path: 'contact', loadChildren: './pages/contact/contact.module#ContactPageModule' },
+  { path: 'login', loadChildren: './pages/login/login.module#LoginPageModule' },  { path: 'register', loadChildren: './pages/register/register.module#RegisterPageModule' },
+
+  // { path: 'register', loadChildren: './register/register.module#RegisterPageModule' },
+
 ];
 
 @NgModule({

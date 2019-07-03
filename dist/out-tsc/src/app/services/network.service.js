@@ -17,8 +17,8 @@ var NetworkService = /** @class */ (function () {
         this.status = new BehaviorSubject(ConnectionStatus.Offline);
         this.plt.ready().then(function () {
             _this.initializeNetworkEvents();
-            var status = _this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
-            //let status = ConnectionStatus.Offline; // comment it in prod
+            //let status = this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
+            var status = ConnectionStatus.Online; // comment it in prod
             _this.status.next(status);
         });
     }

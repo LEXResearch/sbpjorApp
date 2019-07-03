@@ -8,7 +8,9 @@
 
 <ion-content>
   <ion-grid no-padding>
-  <ion-slides options="slideOpts">
+    {{ cronograma }}
+    <ion-button size="medium" (click)="getCronograma()" expand="block" color="main">Logar</ion-button>
+  <!-- <ion-slides options="slideOpts">
     <ion-slide>
       
       <ion-list lines="none">
@@ -240,6 +242,6 @@
       </ion-list>
     </ion-slide>
 
-  </ion-slides>
+  </ion-slides> -->
 </ion-grid>
 </ion-content>

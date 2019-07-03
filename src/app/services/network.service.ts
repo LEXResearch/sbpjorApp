@@ -18,8 +18,8 @@ export class NetworkService {
   constructor(private network: Network, private toastController: ToastController, private plt: Platform) {
     this.plt.ready().then(()=> {
       this.initializeNetworkEvents();
-      let status = this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
-      //let status = ConnectionStatus.Offline; // comment it in prod
+      //let status = this.network.type !== 'none' ? ConnectionStatus.Online : ConnectionStatus.Offline;
+      let status = ConnectionStatus.Online; // comment it in prod
       this.status.next(status);
     });
   }

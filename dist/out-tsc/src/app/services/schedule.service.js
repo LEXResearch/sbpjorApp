@@ -1,121 +1,146 @@
 import * as tslib_1 from "tslib";
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { from } from 'rxjs';
+import { HTTP } from '@ionic-native/http/ngx';
 import { NetworkService, ConnectionStatus } from './network.service';
+import { LocaldataService } from './localdata.service';
 import { Storage } from '@ionic/storage';
-import { tap, map } from 'rxjs/operators';
 var API_STORAGE_KEY = 'specialkey';
-var API_URL = 'https://sbpjor-lex.herokuapp.com/'; // api url
+var API_URL = 'https://sbpjor-server.herokuapp.com/api/'; // api url
 var ScheduleService = /** @class */ (function () {
-    function ScheduleService(http, networkService, storage) {
+    function ScheduleService(http, networkService, localService, storage) {
         this.http = http;
         this.networkService = networkService;
+        this.localService = localService;
         this.storage = storage;
     }
+    // make user authetication, recieve a token that is used for futher requests
+    ScheduleService.prototype.authetication = function (user, password) {
+        var _this = this;
+        return this.http.post(API_URL + "login/", { 'username': user, 'password': password }, {})
+            .then(function (data) {
+            console.log(data.data['token']);
+            _this.token = data.data['token'];
+            _this.setLocalData('token', _this.token);
+        })
+            .catch(function (error) {
+        });
+    };
+    ScheduleService.prototype.registerUser = function (username, password) {
+    };
+    ScheduleService.prototype.registerAnon = function () {
+    };
+    ScheduleService.prototype.reAuth = function () {
+    };
     ScheduleService.prototype.getCronograma = function (forceRefresh) {
         var _this = this;
         if (forceRefresh === void 0) { forceRefresh = false; }
         if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            this.getLocalData('cronograma').then(function (res) {
-                _this.atividades = res;
+            this.getLocalData('cronograma').then(function (data) {
+                _this.cronograma = data;
+                return _this.cronograma;
             });
-            return from(this.getLocalData('cronograma'));
         }
         else {
-            return this.http.get(API_URL + 'cronogramas/?format=json').pipe(map(function (results) { return results[0].atividades; }), tap(function (results) {
-                results.sort(function (item1, item2) {
-                    var h1 = item1.hora.split('T')[1].split(":")[0];
-                    var h2 = item2.hora.split('T')[1].split(":")[0];
-                    if (h1 > h2) {
-                        return 1;
-                    }
-                    if (h1 < h2) {
-                        return -1;
-                    }
-                    return 0;
-                });
-                _this.setLocalData('cronograma', results);
-                _this.atividades = results;
-            }));
+            this.http.get(API_URL + "cronograma/?format=json", {}, { 'Authorization': this.token })
+                .then(function (res) {
+                _this.cronograma = res.data;
+                _this.setLocalData('cronograma', res.data);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
         }
-    };
-    ScheduleService.prototype.getAtividade = function (id) {
-        return this.atividades[id];
     };
     ScheduleService.prototype.getMesas = function (forceRefresh) {
         var _this = this;
         if (forceRefresh === void 0) { forceRefresh = false; }
         if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            return from(this.getLocalData('mesas'));
+            this.getLocalData('mesas').then(function (data) {
+                _this.mesas = data;
+                return _this.mesas;
+            });
         }
         else {
-            return this.http.get(API_URL + 'mesas/?format=json').pipe(map(function (results) { return results[0]; }), tap(function (results) {
-                _this.setLocalData('mesas', results);
-            }));
+            this.http.get(API_URL + "mesa/?format=json", {}, { 'Authorization': this.token })
+                .then(function (res) {
+                _this.mesas = res.data;
+                _this.setLocalData('mesas', res.data);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
         }
     };
     ScheduleService.prototype.getTrabalhos = function (forceRefresh) {
         var _this = this;
         if (forceRefresh === void 0) { forceRefresh = false; }
         if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            console.log("entrou al");
-            return from(this.getLocalData('trabalhos'));
+            this.getLocalData('trabalhos').then(function (data) {
+                _this.trabalhos = data;
+                return _this.trabalhos;
+            });
         }
         else {
-            return this.http.get(API_URL + 'trabalhos/?format=json').pipe(map(function (results) { return results; }), tap(function (results) {
-                console.log(results);
-                _this.setLocalData('trabalhos', results);
-            }));
+            this.http.get(API_URL + "trabalho/?format=json", {}, { 'Authorization': this.token })
+                .then(function (res) {
+                _this.trabalhos = res.data;
+                _this.setLocalData('trabalhos', res.data);
+            })
+                .catch(function (error) {
+                console.log(error);
+            });
         }
     };
-    ScheduleService.prototype.markFavoritos = function () {
-    };
-    // se tiver pefil, add a token
-    ScheduleService.prototype.getFavoritos = function (forceRefresh) {
+    ScheduleService.prototype.sendMessage = function (assunto, message) {
         var _this = this;
-        if (forceRefresh === void 0) { forceRefresh = false; }
-        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline || !forceRefresh) {
-            return from(this.getLocalData('favoritos'));
+        var data = { 'assunto': assunto, 'mensagem': message };
+        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+            return false;
         }
         else {
-            return this.http.get(API_URL + 'favoritos/?format=json').pipe(map(function (results) { return results; }), tap(function (results) {
-                console.log(results);
-                _this.setLocalData('favoritos', results);
-            }));
+            this.http.post(API_URL + "contato/", data, { 'Authorization': this.token })
+                .then(function (data) {
+                return true;
+            })
+                .catch(function (err) {
+                _this.localService.storeRequest(API_URL + "contato/", data);
+                return false;
+            });
         }
     };
-    ScheduleService.prototype.setFavoritos = function (data) {
-        this.setLocalData('favoritos', data);
+    ScheduleService.prototype.sendFavorito = function (trabalho) {
+        var _this = this;
+        var data = { 'user': this.user, 'trabalho': trabalho };
+        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+            this.localService.storeRequest(API_URL + "favorito/", data);
+        }
+        else {
+            this.http.post(API_URL + "favorito/", data, { 'Authorization': this.token })
+                .then(function (data) {
+                return true;
+            })
+                .catch(function (err) {
+                _this.localService.storeRequest(API_URL + "favorito/", data);
+                return false;
+            });
+        }
     };
-    ScheduleService.prototype.sendMessage = function (nome, email, tel, mensagem) {
-        // var headers = new Headers();
-        // headers.append("Accept", 'application/json');
-        // headers.append('Content-Type', 'application/json' );
-        // const requestOptions = new RequestOptions({ headers: headers });
-        var postData = {
-            "nome": nome,
-            "email": email,
-            "tel": tel,
-            "mensagem": mensagem
-        };
-        console.log(postData);
-        var headers = new HttpHeaders();
-        headers.append("Accept", 'application/json');
-        headers.append('Content-Type', 'application/json');
-        //const requestOptions = new HttpRequestOptions({ headers: headers });
-        // this.http.post(API_URL+"/contato", postData).pipe(
-        //   map(results => results),
-        //   tap(results => {
-        //     console.log(results);
-        //   })
-        // )
-        this.http.post(API_URL + "contato", postData, { headers: headers }).subscribe(function (data) {
-            console.log(data['_body']);
-        }, function (error) {
-            console.log(error);
-        });
-        console.log("chamou");
+    ScheduleService.prototype.sendDownload = function (trabalho) {
+        var _this = this;
+        var data = { 'trabalho': trabalho };
+        if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+            this.localService.storeRequest(API_URL + "download/", data);
+        }
+        else {
+            this.http.post(API_URL + "download/", data, { 'Authorization': this.token })
+                .then(function (data) {
+                return true;
+            })
+                .catch(function (err) {
+                _this.localService.storeRequest(API_URL + "download/", data);
+                return false;
+            });
+        }
     };
     ScheduleService.prototype.setLocalData = function (key, data) {
         this.storage.set(key, data);
@@ -127,7 +152,7 @@ var ScheduleService = /** @class */ (function () {
         Injectable({
             providedIn: 'root'
         }),
-        tslib_1.__metadata("design:paramtypes", [HttpClient, NetworkService, Storage])
+        tslib_1.__metadata("design:paramtypes", [HTTP, NetworkService, LocaldataService, Storage])
     ], ScheduleService);
     return ScheduleService;
 }());

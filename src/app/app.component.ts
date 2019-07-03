@@ -46,6 +46,7 @@ export class AppComponent {
     { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
     { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
     { title: 'Sobre', name: 'About', url: '/contact',   icon: '/assets/icon/info.svg', active: false },
+    { title: 'Registro', name: 'RegisterPage', url: '/register',   icon: '/assets/icon/info.svg', active: false },
   ]
 
   openPage(page){

@@ -75,5 +75,65 @@
   --ion-color-light-shade: #d7d8da;
   --ion-color-light-tint: #f5f6f9;
 
+ 
+
+ 
   
+  
+  
+ 
+  
+ 
+  
+
+
+
 }
+/* V3 -> V4 */
+.ion-color-main{
+  --ion-color-base: #58595b;
+}
+.ion-color-amarelo{
+  --ion-color-base: #ffe180;
+}
+.ion-color-bege{
+  --ion-color-base: #ffb98a;
+}
+.ion-color-laranja{
+  --ion-color-base: #f9ab70;
+}
+.ion-color-rosa{
+  --ion-color-base:  #f291a1;
+}
+.ion-color-roxo{
+  --ion-color-base: #c098ea;
+}
+.ion-color-azul{
+  --ion-color-base: #a2c3f4;
+}
+.ion-color-azulzin{
+  --ion-color-base: #a2f2e7;
+}
+.ion-color-verde{
+  --ion-color-base: #bbefa3;
+}
+/* v3 */
+// $colors: (
+//   primary:    #58595b,
+//   secondary:  #ffb98a,
+//   danger:     #f53d3d,
+//   light:      #f9ab70,
+//   dark:       #222,
+//   white:      #ffffff,
+//   main:       #58595b,
+//   amarelo:    #ffe180,
+//   bege:       #ffb98a,
+//   laranja:    #f9ab70,
+//   rosa:       #f291a1,
+//   roxo:       #c098ea,
+//   azul:       #a2c3f4,
+//   azulzin:    #a2f2e7,
+//   verde:      #bbefa3,
+// );
+
+
