@@ -37,10 +37,13 @@ export class HomePage implements OnInit {
 
   ngOnInit() {
     this.plt.ready().then(() => {
-      this.getCronograma()
+      //this.getCronograma()
+      this.getMethod()
     });
     this.presentLoadingWithOptions();
   }
+
+
   //loading 
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
@@ -93,6 +96,16 @@ export class HomePage implements OnInit {
       this.cronograma = data;
       console.log(data);
       console.log("homepage");
+    });
+  }
+  getMethod(){
+    this.scheduleService.getMethod("cronograma").then(data => {
+      this.cronograma = data;
+
+      console.log(data);
+      console.log(this.cronograma);
+      console.log("homepage");
+      
     });
   }
 

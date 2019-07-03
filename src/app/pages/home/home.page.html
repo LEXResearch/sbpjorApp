@@ -9,8 +9,14 @@
 <ion-content>
   <ion-grid no-padding>
     {{ cronograma }}
+    {{ cronograma[0].titulo }}
+    {{ cronograma[0].titulo }}
+    {{ cronograma[0].dias[0].atividades[0].descricao }}
+    
+    
+  
     <ion-button size="medium" (click)="getCronograma()" expand="block" color="main">Logar</ion-button>
-  <!-- <ion-slides options="slideOpts">
+  <ion-slides options="slideOpts">
     <ion-slide>
       
       <ion-list lines="none">
@@ -242,7 +248,7 @@
       </ion-list>
     </ion-slide>
 
-  </ion-slides> -->
+  </ion-slides>
 
 
 </ion-grid>

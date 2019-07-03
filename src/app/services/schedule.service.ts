@@ -19,7 +19,7 @@ export class ScheduleService {
   mesas: any;
 
   user: any;
-  token: string = '';
+  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InZ0b2duaSIsImV4cCI6MTU2MjE4MTMzMSwiZW1haWwiOiJ0b2duaXZpbmlAaG90bWFpbC5jb20ifQ.6NJDoK-pUn7ilDGjoLOCaXgEaJYuk2j4W50dqrUnF50';
 
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
@@ -33,9 +33,7 @@ export class ScheduleService {
       this.token = "JWT " + d.token;
       this.setLocalData('token', this.token);
     })
-
     .catch(error => {
-        
     });
   }
 
@@ -51,18 +49,42 @@ export class ScheduleService {
 
   }
 
+  // getMethod(what: string, forceRefresh: boolean = false){
+  //   return new Promise((resolve, reject) => {
+  //     if(!forceRefresh){
+  //       this.getLocalData(what).then(data => {
+  //         resolve(this.cronograma);
+  //       });
+  //     }
+  //     else {
+  //       this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
+  //       //JWT aisdhiashd
+  //        .then(res => {
+  //          this.setLocalData(what, res.data);
+  //          resolve(this.cronograma);
+  //       })
+  //       .catch(error => {
+  //           console.log(error);
+  //       });
+  //     }
+  //   })
+  // }
+  
   getMethod(what: string, forceRefresh: boolean = false){
     return new Promise((resolve, reject) => {
-      if(!forceRefresh){
-        this.getLocalData(what).then(data => {
-          resolve(this.cronograma);
-        });
-      }
-      else {
+      // if(!forceRefresh){
+      //   // this.getLocalData(what).then(data => {
+      //   resolve(this.cronograma);
+      //   // });
+      // }
+      // else 
+      {
         this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
+        //token => {'JWT token'}
          .then(res => {
-           this.setLocalData(what, res.data);
-           resolve(this.cronograma);
+          // this.setLocalData(what, res.data);
+          res=JSON.parse(res.data);
+          resolve(res);
         })
         .catch(error => {
             console.log(error);
@@ -70,6 +92,9 @@ export class ScheduleService {
       }
     })
   }
+
+
+
 
   getCronograma(forceRefresh: boolean = true){
     if(this.token != null){
