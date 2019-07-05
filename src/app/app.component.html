@@ -17,6 +17,8 @@
           </ion-label>
         </ion-item>
       </ion-list>
+      <ion-button (click)="goToRegister()" expand="block" color="main" *ngIf="userStatus == 'anon'"> ENTRAR </ion-button>
+      <ion-button (click)="doLogout()" expand="block" color="main" *ngIf="userStatus == 'logedin'"> SAIR </ion-button>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content" main animated="false"></ion-router-outlet>

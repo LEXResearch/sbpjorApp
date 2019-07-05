@@ -18,7 +18,7 @@ export class ScheduleService {
   trabalhos: any;
   mesas: any;
 
-  user: any;
+  user: string = '';
   token: string = '';
 
 
@@ -26,43 +26,79 @@ export class ScheduleService {
 
   // make user authetication, recieve a token that is used for futher requests
   authetication(user: string, password: any){
-    return this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
-     .then(data => {
-      let d = JSON.parse(data.data);
-      console.log(d.token);
-      this.token = "JWT " + d.token;
-      this.setLocalData('token', this.token);
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
+      .then(data => {
+        let d = JSON.parse(data.data);
+        this.token = "JWT " + d.token;
+        this.setLocalData('token', this.token);
+        resolve(data);
+      })
+      .catch(error => {
+        console.log(error);
+        rjc(error);
+      });
     })
-
-    .catch(error => {
-        
-    });
   }
 
   registerUser(username: string, password: string){
-
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"register/", { 'username': username, 'password': password }, {}).
+      then(data => {
+        this.setLocalData('state', 'logedin');
+        resolve(data);
+      })
+      .catch(err => {
+        console.log(err);
+        rjc(err);
+      });
+    });
   }
 
-  registerAnon(imei: number){
-
+  registerAnon(){
+    var info = Math.random().toString(36).substring(2, 30) + Math.random().toString(36).substring(2, 30);
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"register/", { 'username': info, 'password': info }, {}).
+      then(data => {
+        this.authetication(info, info).then(loged => {
+          this.setLocalData('state', 'anon');
+          resolve(loged);
+        }).catch(err => {
+          console.log(err);
+          rjc(err);
+        });
+      })
+      .catch(err => {
+        console.log(err);
+        rjc(err);
+      });
+    });
   }
 
-  reAuth(){
+  logout(){
+    return new Promise((resolve, rjc) => {
+      this.setLocalData('state', 'anon');
+      resolve(true);
+    })
+  }
 
+  getState(){
+    return this.getLocalData('state');
   }
 
   getMethod(what: string, forceRefresh: boolean = false){
     return new Promise((resolve, reject) => {
       if(!forceRefresh){
         this.getLocalData(what).then(data => {
-          resolve(this.cronograma);
+          resolve(data);
         });
       }
       else {
         this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
          .then(res => {
-           this.setLocalData(what, res.data);
-           resolve(this.cronograma);
+           res = JSON.parse(res.data);
+           this.setLocalData(what, res);
+           resolve(res);
         })
         .catch(error => {
             console.log(error);
@@ -152,7 +188,7 @@ export class ScheduleService {
   }
 
   sendFavorito(trabalho: number){
-    let data = { 'user': this.user, 'trabalho': trabalho };
+    let data = { 'trabalho': trabalho };
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
       this.localService.storeRequest(API_URL+"favorito/", data);
     }

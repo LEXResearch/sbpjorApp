@@ -8,6 +8,11 @@ import { Router } from '@angular/router';
 
 import { MenuController } from '@ionic/angular';
 
+
+import { ScheduleService } from './services/schedule.service';
+
+
+
 export interface PageInterface {
   title: string;
   name: string;
@@ -26,15 +31,22 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private schedule: ScheduleService,
   ) {
     this.initializeApp();
   }
+
+  userStatus: string = 'anon';
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       this.splashScreen.hide();
+
+    });
+    this.schedule.getState().then(d => {
+      this.userStatus = d;
     });
   }
 
@@ -45,13 +57,22 @@ export class AppComponent {
     { title: 'Trabalhos Favoritos', name: 'Favorite', url: '/favorite',   icon: '/assets/icon/favoritos.svg', active: false },
     { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
     { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
-    { title: 'Sobre', name: 'About', url: '/contact',   icon: '/assets/icon/info.svg', active: false },
-    { title: 'Registro', name: 'RegisterPage', url: '/register',   icon: '/assets/icon/info.svg', active: false },
+    { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
   ]
 
   openPage(page){
     this.menu.close();
     this.router.navigateByUrl(page.url);
+  }
+  goToRegister(){
+    this.menu.close();
+    this.router.navigateByUrl('/register');
+  }
+  doLogout(){
+    this.schedule.logout().then(() => {
+      this.menu.close();
+      this.router.navigateByUrl('/register');
+    });
   }
 
 }
