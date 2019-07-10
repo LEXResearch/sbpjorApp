@@ -19,7 +19,7 @@ export class ScheduleService {
   mesas: any;
 
   user: any;
-  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InZ0b2duaSIsImV4cCI6MTU2MjE4MTMzMSwiZW1haWwiOiJ0b2duaXZpbmlAaG90bWFpbC5jb20ifQ.6NJDoK-pUn7ilDGjoLOCaXgEaJYuk2j4W50dqrUnF50';
+  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InZ0b2duaSIsImV4cCI6MTU2MjY5NTY4MiwiZW1haWwiOiJ0b2duaXZpbmlAaG90bWFpbC5jb20ifQ.8fPXSeWYJcug_KyJSaA34IioEaLbSBxJASoxJdmpHqA';
 
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }

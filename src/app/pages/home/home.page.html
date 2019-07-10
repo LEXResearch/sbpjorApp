@@ -8,15 +8,120 @@
 
 <ion-content>
   <ion-grid no-padding>
-    {{ cronograma }}
-    {{ cronograma[0].titulo }}
-    {{ cronograma[0].titulo }}
-    {{ cronograma[0].dias[0].atividades[0].descricao }}
     
-    
+    <!-- {{ cronograma[0].titulo }}
+    <p>data</p>
+    {{ cronograma[0].data }}
+    <p>dias</p>
+    <span>priemiro 0</span>{{ cronograma[0].dias[0].atividades[0].descricao }}<span>End</span> <br>
+    <span>segundo 0(1) test </span>{{ cronograma[0].dias[0].atividades[0].descricao }}<span>End</span> <br>
+
+
+
+    <span> hora evento(atividade) </span>{{ cronograma[0].dias[0].atividades[0].hora }} <span> End stop</span><br>
+
+    <span> dia aqui </span>{{ cronograma[0].dias[1].semana }} <span> End stop</span><br>
+
+    <span> dia seg aqui-</span>{{ cronograma[0].dias[0].semana }} <span> End stop</span><br>
+
+    <span> dia terc aqui-</span>{{ cronograma[0].dias[1].semana }} <span> End stop</span><br>
+
+    <span> dia 2 aqui</span>{{ cronograma[0].dias[1].dia }} <span> End stop</span> -->
+
   
-    <ion-button size="medium" (click)="getCronograma()" expand="block" color="main">Logar</ion-button>
-  <ion-slides options="slideOpts">
+    <ion-button size="medium" (click)="getCronograma()" expand="block" color="azul">LogarCronog</ion-button>
+    <ion-button size="medium" (click)="getMethod()" expand="block" color="azul">LogarMethod</ion-button>
+
+    <!-- test aqui -->
+    <ion-slides options="slideOpts">
+        <ion-slide>
+          
+          <ion-list lines="none">
+            <ion-row justify-content-center class="ion-padding-bottom">
+              <ion-col size=4 align-self-center class="highlight tamDayBox">
+                  <ion-row justify-content-center class="number-active">07</ion-row>
+                  <ion-row justify-content-center class="text-active">{{ cronograma[0].dias[0].semana }}</ion-row>
+              </ion-col>
+            </ion-row>
+            <ion-row  class="ion-margin-top" [ngStyle]=cor(atividade[0].categoria)>
+<!--*ngFor="let atividade of cronogramaByDay(7)" [ngStyle]=cor(atividade) -->
+                    <ion-col size=2>
+                      <ion-row><ion-col class="hora">{{ hora(cronograma[0].dias[0].atividades[0].hora) }}h</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
+                    </ion-col>
+
+
+                    <ion-col size=8>
+                      <!-- <p>bloco aleatorio</p> -->
+
+                      <ion-row ><ion-col> {{ cronograma[0].dias[0].atividades[0].titulo }}</ion-col></ion-row>
+                      <ion-row ><ion-col><ion-icon name="compass"></ion-icon> {{ cronograma[0].dias[0].atividades[0].local }}</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
+                      <ion-row class="description">
+                        <ion-col>
+                          <ion-row>
+                            <br>
+
+                            {{ cronograma[0].dias[0].atividades[0].descricao }}
+
+                            <br><br>
+                          </ion-row>
+                          <ion-row justify-content-center>
+                            <ion-button *ngIf="day[0].atividades[0].mesas['length'] > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                            <!-- (click)="openModal(atividade)" -->
+                          </ion-row>
+                        </ion-col>
+
+
+                      </ion-row>
+                    </ion-col>
+
+
+
+                    <!-- <ion-col size=8>
+                      <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col>{{ atividade.titulo }}</ion-col></ion-row>
+                      <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ cronograma[0].dias[0].atividades[0].local }}</ion-col></ion-row>
+                      <ion-row  [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}" class="description">
+                        <ion-col>
+                          <ion-row>
+                            <br>
+
+                            {{ cronograma[0].dias[0].atividades[0].descricao }}
+
+                            <br><br>
+                          </ion-row>
+                          <ion-row justify-content-center>
+                            <ion-button *ngIf="atividade.mesas.length > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                          </ion-row>
+                        </ion-col>
+
+
+                      </ion-row>
+                    </ion-col> -->
+
+
+                    <!-- <ion-col size=2 class="ion-padding-end">
+                      <button ion-button outline (click)="expandItem(atividade)" class="my-button">
+                        <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
+                        <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
+                      </button>
+                    </ion-col> -->
+
+            </ion-row>
+          </ion-list>
+        </ion-slide>
+
+        <ion-slide>
+          thing
+          </ion-slide>
+
+        
+
+      </ion-slides>
+<!-- até aqui -->
+
+
+
+
+  <!-- <ion-slides options="slideOpts">
     <ion-slide>
       
       <ion-list lines="none">
@@ -248,7 +353,7 @@
       </ion-list>
     </ion-slide>
 
-  </ion-slides>
+  </ion-slides> -->
 
 
 </ion-grid>

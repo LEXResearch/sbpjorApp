@@ -15,6 +15,8 @@ import { LoadingController } from '@ionic/angular';
 export class HomePage implements OnInit {
 
   cronograma: any;
+  atividade: any;
+  day: any;
 
   slideOpts = {
     speed: 1000,
@@ -24,6 +26,7 @@ export class HomePage implements OnInit {
   };
 
   dataReturned:any;
+  
 
   constructor(
     private scheduleService: ScheduleService,
@@ -95,7 +98,7 @@ export class HomePage implements OnInit {
     this.scheduleService.getCronograma().then(data => {
       this.cronograma = data;
       console.log(data);
-      console.log("homepage");
+      console.log("homepageCronogr");
     });
   }
   getMethod(){
@@ -104,8 +107,15 @@ export class HomePage implements OnInit {
 
       console.log(data);
       console.log(this.cronograma);
-      console.log("homepage");
-      
+      console.log("homepageMethod");
+      this.atividade = data[0].dias[0].atividades;
+      console.log(this.atividade); 
+      this.day = data[0].dias;
+      console.log(this.day);
+      console.log(this.day[0].atividades[0].mesas);
+      console.log(this.day[0].atividades[0].mesas.length);
+      console.log(this.day[0].atividades[0].mesas['length']);
+     
     });
   }
 
@@ -117,24 +127,34 @@ export class HomePage implements OnInit {
   //      return item.data.split('-')[2] == day;
   //   });
   // }
+  cronogramaByDay(day){
+    return this.cronograma.filter((day) => {
+      if (day.dias[0] != null)
+        console.log("passou mermao");
+        return day.data.split('-')[2] == day;
 
-  // hora(item){
-  //   return item.hora.split('T')[1].split(":")[0];
-  // }
+      
 
-  // cor(atividade){
-  //   return {'background': 'linear-gradient(90deg, '+ atividade.cor_hex +' 15px, #FFFFFF 15px)'};
-  // }
+    });
+  }
 
-  // expandItem(item){
-  //       this.cronograma.map((listItem) => {
-  //           if(item == listItem){
-  //               listItem.open = !listItem.open;
-  //           } else {
-  //               listItem.open = false;
-  //           }
-  //           return listItem;
-  //       });
-  // }
+  hora(item){
+    return item.split('T')[1].split(":")[0];//item.data
+  }
+
+  cor(atividade){
+    return {'background': 'linear-gradient(90deg, '+ atividade.cor_hex +' 15px, #FFFFFF 15px)'};
+  }
+
+  expandItem(item){
+        this.cronograma.map((listItem) => {
+            if(item == listItem){
+                listItem.open = !listItem.open;
+            } else {
+                listItem.open = false;
+            }
+            return listItem;
+        });
+  }
 
 }
