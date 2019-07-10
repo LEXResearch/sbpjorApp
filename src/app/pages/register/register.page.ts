@@ -42,8 +42,15 @@ export class RegisterPage implements OnInit {
     this.router.navigateByUrl('/login');
   }
   goAnonimateType(){
+    this.presentLoadingWithOptions();
     this.schedule.registerAnon().then(d => {
-      this.router.navigateByUrl('/home');
+      if(d['username']){
+        this.schedule.authetication(d['username'], d['username']).then(res =>{
+          
+          this.loading.dismiss();
+          this.router.navigateByUrl('/home');
+        });
+      }
     });
   }
   doRegistro(){

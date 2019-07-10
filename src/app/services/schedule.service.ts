@@ -20,18 +20,23 @@ export class ScheduleService {
 
   user: string = '';
   token: string = '';
-
+  userStatus: string = null;
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
 
   // make user authetication, recieve a token that is used for futher requests
-  authetication(user: string, password: any){
+  authetication(user: string, password: any, anonnymous: boolean){
     return new Promise((resolve, rjc) => {
       this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
       .then(data => {
         let d = JSON.parse(data.data);
         this.token = "JWT " + d.token;
         this.setLocalData('token', this.token);
+        if(anonnymous){
+          this.setLocalData('state', 'anon');
+        } else {
+          this.setLocalData('state', 'logedin');
+        }
         resolve(data);
       })
       .catch(error => {
@@ -45,7 +50,7 @@ export class ScheduleService {
     return new Promise((resolve, rjc) => {
       this.http.post(API_URL+"register/", { 'username': username, 'password': password }, {}).
       then(data => {
-        this.setLocalData('state', 'logedin');
+        this.setLocalData('state', "logedin");
         resolve(data);
       })
       .catch(err => {
@@ -60,13 +65,9 @@ export class ScheduleService {
     return new Promise((resolve, rjc) => {
       this.http.post(API_URL+"register/", { 'username': info, 'password': info }, {}).
       then(data => {
-        this.authetication(info, info).then(loged => {
-          this.setLocalData('state', 'anon');
-          resolve(loged);
-        }).catch(err => {
-          console.log(err);
-          rjc(err);
-        });
+        this.setLocalData('state', 'anon');
+        data = JSON.parse(data.data);
+        resolve(data);
       })
       .catch(err => {
         console.log(err);
@@ -77,13 +78,25 @@ export class ScheduleService {
 
   logout(){
     return new Promise((resolve, rjc) => {
-      this.setLocalData('state', 'anon');
+      this.setLocalData('state', 'logout');
       resolve(true);
     })
   }
 
   getState(){
-    return this.getLocalData('state');
+      return new Promise((resolve, rjct) => {
+        this.getLocalData('state').then((d)=>{
+          if(d == null)
+            this.userStatus = 'logout';
+          else
+            this.userStatus = d;  
+          
+          console.log("service US: " + this.userStatus);
+          resolve(this.userStatus);
+        }).catch(err => {
+          rjct(err);
+        });
+    });
   }
 
   getMethod(what: string, forceRefresh: boolean = false){

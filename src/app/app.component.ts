@@ -10,6 +10,7 @@ import { MenuController } from '@ionic/angular';
 
 
 import { ScheduleService } from './services/schedule.service';
+import { refreshDescendantViews } from '@angular/core/src/render3/instructions';
 
 
 
@@ -37,17 +38,31 @@ export class AppComponent {
     this.initializeApp();
   }
 
-  userStatus: string = 'anon';
+  userStatus: string;
 
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      
+      this.schedule.getState().then(d => {
+        this.userStatus = String(d);
+        if(String(d) == 'anon' || String(d) == 'logedin') {
+          
+          this.router.navigateByUrl('/home');
+        
+        } else if(String(d) == 'logout') {
+          this.userStatus = String(d);
+          this.router.navigateByUrl('/register');
+        } else {
+          this.userStatus = 'logout';
+          this.router.navigateByUrl('/register');
+        }
+        console.log('here' + this.userStatus);
 
+        this.splashScreen.hide();
+      });
     });
-    this.schedule.getState().then(d => {
-      this.userStatus = d;
-    });
+    
   }
 
   appPages: PageInterface[] = [
@@ -59,7 +74,14 @@ export class AppComponent {
     { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
     { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
   ]
-
+  refresh(){
+    this.schedule.getState().then(d => {
+      this.userStatus = String(d);
+      console.log('refresh' + this.userStatus);
+      console.log('call');
+    });
+  }
+  
   openPage(page){
     this.menu.close();
     this.router.navigateByUrl(page.url);
