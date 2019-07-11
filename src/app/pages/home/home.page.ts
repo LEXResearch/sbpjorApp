@@ -17,6 +17,63 @@ export class HomePage implements OnInit {
   cronograma: any;
   atividade: any;
   day: any;
+  
+//   index = 0;
+//   addWarmUp() {
+//     this.warmupTemp.push(this.warmpup[this.index]);
+//    this.index++;
+// }
+
+ 
+//apenas para usar ionicServe
+semOpcoes =
+[
+    {
+    "titulo": "Teste",
+    "data": "2019-06-17T17:44:56Z",
+    "is_active": true,
+    "dias": [
+        {
+            "dia": 1,
+            "semana": "SEG",
+            "atividades": [
+                {
+                    "titulo": "Abertura",
+                    "descricao": "dasdasdasdas",
+                    "local": "dasdasda",
+                    "hora": "2019-06-17T17:47:44Z",
+                    "categoria": 1,
+                    "mesas": [
+                        1
+                    ]
+                }
+            ]
+        },
+        {
+            "dia": 2,
+            "semana": "TER",
+            "atividades": [
+                {
+                    "titulo": "Finalização",
+                    "descricao": "AlgumaDescrição",
+                    "local": "LocalFinal",
+                    "hora": "2019-07-17T12:00:00Z",
+                    "categoria": 2,
+                    "mesas": [
+                        2
+                    ]
+                }
+            ]
+        }
+    ]
+  }
+]
+
+ 
+ 
+
+
+
 
   slideOpts = {
     speed: 1000,
@@ -44,6 +101,7 @@ export class HomePage implements OnInit {
       this.getMethod()
     });
     this.presentLoadingWithOptions();
+    console.log(this.semOpcoes);
   }
 
 
@@ -108,6 +166,7 @@ export class HomePage implements OnInit {
       console.log(data);
       console.log(this.cronograma);
       console.log("homepageMethod");
+      
       this.atividade = data[0].dias[0].atividades;
       console.log(this.atividade); 
       this.day = data[0].dias;
