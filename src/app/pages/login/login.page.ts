@@ -51,7 +51,7 @@ export class LoginPage implements OnInit {
   doLogin(){
     if(this.usuario != null && this.password != null){
       this.presentLoadingWithOptions();
-      this.service.authetication(this.usuario, this.password).then(d => {
+      this.service.authetication(this.usuario, this.password, false).then(d => {
         this.loading.dismiss();
         this.router.navigateByUrl('/home');
       }).catch( d => {

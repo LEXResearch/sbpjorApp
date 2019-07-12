@@ -45,7 +45,7 @@ export class RegisterPage implements OnInit {
     this.presentLoadingWithOptions();
     this.schedule.registerAnon().then(d => {
       if(d['username']){
-        this.schedule.authetication(d['username'], d['username']).then(res =>{
+        this.schedule.authetication(d['username'], d['username'], true).then(res =>{
           
           this.loading.dismiss();
           this.router.navigateByUrl('/home');
