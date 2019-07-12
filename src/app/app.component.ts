@@ -44,20 +44,17 @@ export class AppComponent {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
       
+      
       this.schedule.getState().then(d => {
-        this.userStatus = String(d);
-        if(String(d) == 'anon' || String(d) == 'logedin') {
-          
+        this.userStatus = d;
+        if(d == 'anon' || d == 'logedin') {
           this.router.navigateByUrl('/home');
-        
-        } else if(String(d) == 'logout') {
-          this.userStatus = String(d);
+        } else if(d == 'logout') {
           this.router.navigateByUrl('/register');
         } else {
           this.userStatus = 'logout';
           this.router.navigateByUrl('/register');
         }
-        console.log('here' + this.userStatus);
 
         this.splashScreen.hide();
       });
@@ -75,11 +72,8 @@ export class AppComponent {
     { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
   ]
   refresh(){
-    this.schedule.getState().then(d => {
-      this.userStatus = String(d);
-      console.log('refresh' + this.userStatus);
-      console.log('call');
-    });
+    this.userStatus = this.schedule.getStateVar();
+    console.log(this.userStatus);
   }
   
   openPage(page){

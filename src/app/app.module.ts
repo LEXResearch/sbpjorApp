@@ -9,6 +9,8 @@ import { StatusBar } from '@ionic-native/status-bar/ngx';
 import { AppComponent } from './app.component';
 import { AppRoutingModule } from './app-routing.module';
 
+import { AuthGuardService } from './guards/auth-guard.service';
+
 import { IonicStorageModule } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Network } from '@ionic-native/network/ngx';
@@ -24,7 +26,8 @@ import { Network } from '@ionic-native/network/ngx';
     SplashScreen,
     { provide: RouteReuseStrategy, useClass: IonicRouteStrategy },
     Network,
-    HTTP
+    HTTP,
+    AuthGuardService,
   ],
   bootstrap: [AppComponent]
 })

@@ -28,10 +28,10 @@ export class RegisterPage implements OnInit {
 
   }
 
-  async presentLoadingWithOptions() {
+  async presentLoadingWithOptions(message: string) {
     this.loading = await this.loadingController.create({
       spinner: null,
-      message: 'Registrando...',
+      message: message,
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });
@@ -42,7 +42,7 @@ export class RegisterPage implements OnInit {
     this.router.navigateByUrl('/login');
   }
   goAnonimateType(){
-    this.presentLoadingWithOptions();
+    this.presentLoadingWithOptions("Modo anônimo...");
     this.schedule.registerAnon().then(d => {
       if(d['username']){
         this.schedule.authetication(d['username'], d['username'], true).then(res =>{
@@ -55,13 +55,13 @@ export class RegisterPage implements OnInit {
   }
   doRegistro(){
     if(this.usuario != null && this.psw1 != null && this.psw2 != null && this.psw1 == this.psw2){
-      this.presentLoadingWithOptions();
+      this.presentLoadingWithOptions("Registrando...");
 
       this.schedule.registerUser(this.usuario, this.psw1).then((data) => {
         this.loading.dismiss();
         let navExtra: NavigationExtras = {
           state: {
-            registred: 1
+            registred: 1 // this say to login page to display a modal to login
           }
         }
         this.router.navigate(['login'], navExtra);

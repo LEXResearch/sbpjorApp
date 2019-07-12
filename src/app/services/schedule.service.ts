@@ -20,7 +20,7 @@ export class ScheduleService {
 
   user: string = '';
   token: string = '';
-  userStatus: string = null;
+  userStatus: string = 'logout';
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
 
@@ -34,8 +34,10 @@ export class ScheduleService {
         this.setLocalData('token', this.token);
         if(anonnymous){
           this.setLocalData('state', 'anon');
+          this.userStatus = 'anon';
         } else {
           this.setLocalData('state', 'logedin');
+          this.userStatus = 'logedin';
         }
         resolve(data);
       })
@@ -79,24 +81,27 @@ export class ScheduleService {
   logout(){
     return new Promise((resolve, rjc) => {
       this.setLocalData('state', 'logout');
+      this.userStatus = 'logout';
       resolve(true);
     })
   }
 
   getState(){
-      return new Promise((resolve, rjct) => {
+      return new Promise<string>((resolve, rjct) => {
         this.getLocalData('state').then((d)=>{
-          if(d == null)
+          if(d == '')
             this.userStatus = 'logout';
           else
             this.userStatus = d;  
-          
           console.log("service US: " + this.userStatus);
           resolve(this.userStatus);
         }).catch(err => {
           rjct(err);
         });
     });
+  }
+  getStateVar(){
+    return this.userStatus;
   }
 
   getMethod(what: string, forceRefresh: boolean = false){
