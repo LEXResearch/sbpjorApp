@@ -1,7 +1,8 @@
 import { Component, OnInit } from '@angular/core';
-import { getCheckNoChangesMode } from '@angular/core/src/render3/state';
-import { Router } from '@angular/router';
+import { Router, ActivatedRoute } from '@angular/router';
 import { ScheduleService } from '../../services/schedule.service';
+
+import { LoadingController, ToastController } from '@ionic/angular';
 
 
 @Component({
@@ -11,33 +12,64 @@ import { ScheduleService } from '../../services/schedule.service';
 })
 export class LoginPage implements OnInit {
 
-  constructor( 
+  constructor(
     private router: Router,
-    private service: ScheduleService
-    ) { }
+    private route: ActivatedRoute,
+    private service: ScheduleService,
+    public loadingController: LoadingController,
+    public toastController: ToastController,
+    ) {
+      this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        let toast = this.toastController.create({
+          message: 'Registrado! Agora é só logar!',
+          duration: 3000,
+          position: 'bottom'
+        });
+        toast.then(toast => toast.present());
+      }
+    });
+    }
     usuario: any;
     password: any;
+    loading: any;
 
   ngOnInit() {
-    
+
   }
+
+  async presentLoadingWithOptions() {
+    this.loading = await this.loadingController.create({
+      spinner: null,
+      message: 'Entrando...',
+      translucent: true,
+      cssClass: 'custom-class custom-loading'
+    });
+    return await this.loading.present();
+  }
+
   doLogin(){
-    
     if(this.usuario != null && this.password != null){
-      this.service.authetication(this.usuario, this.password).then(d => {
-        console.log("foii");
-        console.log(d);
+      this.presentLoadingWithOptions();
+      this.service.authetication(this.usuario, this.password, false).then(d => {
+        this.loading.dismiss();
         this.router.navigateByUrl('/home');
       }).catch( d => {
-        console.log("fodeu");
+        this.loading.dismiss();
+        let toast = this.toastController.create({
+          message: 'Não conseguimos logar, tente novamente!',
+          duration: 3000,
+          position: 'bottom',
+        })
+        toast.then(toast => toast.present());
       });
     }
 
-    
+
     //fazer função aqui
   }
 
-  
+
 
 
 

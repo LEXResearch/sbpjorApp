@@ -8,6 +8,12 @@ import { Router } from '@angular/router';
 
 import { MenuController } from '@ionic/angular';
 
+
+import { ScheduleService } from './services/schedule.service';
+import { refreshDescendantViews } from '@angular/core/src/render3/instructions';
+
+
+
 export interface PageInterface {
   title: string;
   name: string;
@@ -26,16 +32,34 @@ export class AppComponent {
     private splashScreen: SplashScreen,
     private statusBar: StatusBar,
     private router: Router,
-    private menu: MenuController
+    private menu: MenuController,
+    private schedule: ScheduleService,
   ) {
     this.initializeApp();
   }
 
+  userStatus: string;
+
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      this.splashScreen.hide();
+      
+      
+      this.schedule.getState().then(d => {
+        this.userStatus = d;
+        if(d == 'anon' || d == 'logedin') {
+          this.router.navigateByUrl('/home');
+        } else if(d == 'logout') {
+          this.router.navigateByUrl('/register');
+        } else {
+          this.userStatus = 'logout';
+          this.router.navigateByUrl('/register');
+        }
+
+        this.splashScreen.hide();
+      });
     });
+    
   }
 
   appPages: PageInterface[] = [
@@ -45,13 +69,26 @@ export class AppComponent {
     { title: 'Trabalhos Favoritos', name: 'Favorite', url: '/favorite',   icon: '/assets/icon/favoritos.svg', active: false },
     { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
     { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
-    { title: 'Sobre', name: 'About', url: '/contact',   icon: '/assets/icon/info.svg', active: false },
-    { title: 'Registro', name: 'RegisterPage', url: '/register',   icon: '/assets/icon/info.svg', active: false },
+    { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
   ]
-
+  refresh(){
+    this.userStatus = this.schedule.getStateVar();
+    console.log(this.userStatus);
+  }
+  
   openPage(page){
     this.menu.close();
     this.router.navigateByUrl(page.url);
+  }
+  goToRegister(){
+    this.menu.close();
+    this.router.navigateByUrl('/register');
+  }
+  doLogout(){
+    this.schedule.logout().then(() => {
+      this.menu.close();
+      this.router.navigateByUrl('/register');
+    });
   }
 
 }

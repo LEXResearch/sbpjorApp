@@ -1,9 +1,9 @@
 <ion-app>
-  <ion-menu contentId="content" side="start">
+  <ion-menu  contentId="content" side="start">
     <ion-header no-border>
       <ion-toolbar>
         <ion-buttons slot="start">
-          <ion-menu-button autoHide="true"></ion-menu-button>
+          <ion-menu-button (click)="refresh()" autoHide="true"></ion-menu-button>
         </ion-buttons>
         <h3>Menu</h3>
       </ion-toolbar>
@@ -17,6 +17,8 @@
           </ion-label>
         </ion-item>
       </ion-list>
+      <ion-button (click)="goToRegister()" expand="block" color="" *ngIf="userStatus == 'anon' || userStatus == 'logout'"> ENTRAR </ion-button>
+      <ion-button (click)="doLogout()" expand="block" color="" *ngIf="userStatus == 'logedin'"> SAIR </ion-button>
     </ion-content>
   </ion-menu>
   <ion-router-outlet id="content" main animated="false"></ion-router-outlet>

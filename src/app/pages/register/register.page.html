@@ -1,4 +1,10 @@
-
+<ion-header no-border>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button autoHide="false"></ion-menu-button>
+    </ion-buttons>
+  </ion-toolbar>
+</ion-header>
 
 <ion-content>
   <ion-grid>
@@ -9,27 +15,27 @@
         </div>
         <div padding>
           <ion-item>
-            <ion-input type="text" placeholder="Usuário"></ion-input>
+            <ion-input [(ngModel)]="usuario" type="text" placeholder="Usuário"></ion-input>
           </ion-item>
-  
+
           <ion-item>
-            <ion-input type="password" placeholder="Senha"></ion-input>
+            <ion-input [(ngModel)]="psw1" type="password" placeholder="Senha"></ion-input>
           </ion-item>
           <ion-item>
-            <ion-input type="password" placeholder="Confirmar Senha"></ion-input>
+            <ion-input [(ngModel)]="psw2" type="password" placeholder="Confirmar Senha"></ion-input>
           </ion-item>
         </div>
-  
+
         <div padding>
           <ion-button size="medium" (click)="doRegistro()" expand="block" color="main">Registrar</ion-button>
         </div>
-       
+
         <br>
         <div style="padding: 0 22% 0 22%">
           <ion-button class="loginDone" size="small" (click)="goLoginPage()" expand="block" color="medium" fill="outline">Login</ion-button>
         </div>
         <!-- <div style="text-align:center">
-          <a href="/home" class="linkDecoration">Modo Anônimo</a> 
+          <a href="/home" class="linkDecoration">Modo Anônimo</a>
         </div> -->
 
         <div style="text-align:center">
@@ -37,14 +43,12 @@
         </div>
 
 
-     
+
 
 
 
       </ion-col>
     </ion-row>
   </ion-grid>
- 
+
 </ion-content>
-
-

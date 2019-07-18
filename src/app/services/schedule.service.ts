@@ -18,35 +18,90 @@ export class ScheduleService {
   trabalhos: any;
   mesas: any;
 
-  user: any;
-  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InZ0b2duaSIsImV4cCI6MTU2MjY5NTY4MiwiZW1haWwiOiJ0b2duaXZpbmlAaG90bWFpbC5jb20ifQ.8fPXSeWYJcug_KyJSaA34IioEaLbSBxJASoxJdmpHqA';
-
+  user: string = '';
+  token: string = '';
+  userStatus: string = 'logout';
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
 
   // make user authetication, recieve a token that is used for futher requests
-  authetication(user: string, password: any){
-    return this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
-     .then(data => {
-      let d = JSON.parse(data.data);
-      console.log(d.token);
-      this.token = "JWT " + d.token;
-      this.setLocalData('token', this.token);
+  authetication(user: string, password: any, anonnymous: boolean){
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"login/", {'username': user, 'password': password}, {})
+      .then(data => {
+        let d = JSON.parse(data.data);
+        this.token = "JWT " + d.token;
+        this.setLocalData('token', this.token);
+        if(anonnymous){
+          this.setLocalData('state', 'anon');
+          this.userStatus = 'anon';
+        } else {
+          this.setLocalData('state', 'logedin');
+          this.userStatus = 'logedin';
+        }
+        resolve(data);
+      })
+      .catch(error => {
+        console.log(error);
+        rjc(error);
+      });
     })
-    .catch(error => {
-    });
   }
 
   registerUser(username: string, password: string){
-
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"register/", { 'username': username, 'password': password }, {}).
+      then(data => {
+        this.setLocalData('state', "logedin");
+        resolve(data);
+      })
+      .catch(err => {
+        console.log(err);
+        rjc(err);
+      });
+    });
   }
 
-  registerAnon(imei: number){
-
+  registerAnon(){
+    var info = Math.random().toString(36).substring(2, 30) + Math.random().toString(36).substring(2, 30);
+    return new Promise((resolve, rjc) => {
+      this.http.post(API_URL+"register/", { 'username': info, 'password': info }, {}).
+      then(data => {
+        this.setLocalData('state', 'anon');
+        data = JSON.parse(data.data);
+        resolve(data);
+      })
+      .catch(err => {
+        console.log(err);
+        rjc(err);
+      });
+    });
   }
 
-  reAuth(){
+  logout(){
+    return new Promise((resolve, rjc) => {
+      this.setLocalData('state', 'logout');
+      this.userStatus = 'logout';
+      resolve(true);
+    })
+  }
 
+  getState(){
+      return new Promise<string>((resolve, rjct) => {
+        this.getLocalData('state').then((d)=>{
+          if(d == '')
+            this.userStatus = 'logout';
+          else
+            this.userStatus = d;
+          console.log("service US: " + this.userStatus);
+          resolve(this.userStatus);
+        }).catch(err => {
+          rjct(err);
+        });
+    });
+  }
+  getStateVar(){
+    return this.userStatus;
   }
 
   // getMethod(what: string, forceRefresh: boolean = false){
@@ -69,22 +124,21 @@ export class ScheduleService {
   //     }
   //   })
   // }
-  
+
   getMethod(what: string, forceRefresh: boolean = false){
     return new Promise((resolve, reject) => {
-      // if(!forceRefresh){
-      //   // this.getLocalData(what).then(data => {
-      //   resolve(this.cronograma);
-      //   // });
-      // }
-      // else 
-      {
+      if(!forceRefresh){
+        this.getLocalData(what).then(data => {
+          resolve(data);
+        });
+      }
+      else {
         this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
         //token => {'JWT token'}
          .then(res => {
-          // this.setLocalData(what, res.data);
-          res=JSON.parse(res.data);
-          resolve(res);
+           res = JSON.parse(res.data);
+           this.setLocalData(what, res);
+           resolve(res);
         })
         .catch(error => {
             console.log(error);
@@ -177,7 +231,7 @@ export class ScheduleService {
   }
 
   sendFavorito(trabalho: number){
-    let data = { 'user': this.user, 'trabalho': trabalho };
+    let data = { 'trabalho': trabalho };
     if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
       this.localService.storeRequest(API_URL+"favorito/", data);
     }
