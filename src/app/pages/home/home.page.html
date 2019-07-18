@@ -34,20 +34,19 @@
 
 
     <ion-slides options="slideOpts">
-        <ion-slide *ngFor="let dia of cronograma[0].dias; let i = index">
+        <ion-slide *ngFor="let dia of cronograma.dias">
 
           <ion-list lines="none">
             <ion-row justify-content-center class="ion-padding-bottom">
               <ion-col size=4 align-self-center class="highlight tamDayBox">
-                  <ion-row justify-content-center class="number-active">{{ cronograma[0].dias[i].dia }} </ion-row>
-                  <ion-row justify-content-center class="text-active">{{ cronograma[0].dias[i].semana }}</ion-row>
-                  <ion-row justify-content-center class="text-active">{{ i }}</ion-row> <!--tirar dps, index counter -->
+                  <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
+                  <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
               </ion-col>
             </ion-row>
-            <ion-row  class="ion-margin-top" *ngFor="let atividades of cronograma[0].dias[i].atividades; let j = index"  > <!-- segundo laço para passar dentro de cada atividade dentro de cada dias-->
+            <ion-row  class="ion-margin-top" *ngFor="let atividade of dia.atividades"  > <!-- segundo laço para passar dentro de cada atividade dentro de cada dias-->
 <!--*ngFor="let atividade of cronogramaByDay(7)" [ngStyle]=cor(atividade) -->
                     <ion-col size=2 >
-                      <ion-row><ion-col class="hora">{{ hora(cronograma[0].dias[i].atividades[j].hora) }}h</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
+                      <ion-row><ion-col class="hora">{{ hora(atividade.hora) }}h</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
                     </ion-col>
 
                     <!-- <ion-col> i e j
@@ -58,19 +57,19 @@
 
                     <ion-col size=8>
 
-                      <ion-row ><ion-col> {{ cronograma[0].dias[i].atividades[j].titulo }}</ion-col></ion-row>
-                      <ion-row ><ion-col><ion-icon name="compass"></ion-icon> {{ cronograma[0].dias[i].atividades[j].local }}</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
+                      <ion-row ><ion-col> {{ atividade.titulo }}</ion-col></ion-row>
+                      <ion-row ><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
                       <ion-row class="description">
                         <ion-col>
                           <ion-row>
                             <br>
 
-                            {{ cronograma[0].dias[i].atividades[j].descricao }}
+                            {{ atividade.descricao }}
 
                             <br><br>
                           </ion-row>
                           <ion-row justify-content-center>
-                            <ion-button *ngIf="day[i].atividades[j].mesas['length'] > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                            <ion-button *ngIf="atividade.mesas['length'] > 0" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                             <!-- (click)="openModal(atividade)"  -->
                           </ion-row>
                         </ion-col>

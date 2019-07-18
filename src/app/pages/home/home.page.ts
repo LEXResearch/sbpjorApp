@@ -20,6 +20,8 @@ export class HomePage implements OnInit {
   color: any;
 
 
+  loading: any;
+
   slideOpts = {
     speed: 1000,
     centeredSlides: true,
@@ -43,21 +45,23 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.presentLoadingWithOptions();
     this.plt.ready().then(() => {
-      this.getCronograma()
+      this.scheduleService.getCronograma().then(d => {
+        this.cronograma = d;
+      });
     });
+    this.loading.dismiss();
   }
 
 
   //loading
   async presentLoadingWithOptions() {
-    const loading = await this.loadingController.create({
+    this.loading = await this.loadingController.create({
       spinner: null,
-      duration: 2000,   //1000
       message: 'Por favor espere...',
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });
-    return await loading.present();
+    return await this.loading.present();
   }
 
 
