@@ -17,7 +17,7 @@ export class HomePage implements OnInit {
   cronograma: any;
   atividade: any;
   day: any;
-  color: any;  
+  color: any;
 
 
   slideOpts = {
@@ -28,7 +28,7 @@ export class HomePage implements OnInit {
   };
 
   dataReturned:any;
-  
+
 
   constructor(
     private scheduleService: ScheduleService,
@@ -41,15 +41,14 @@ export class HomePage implements OnInit {
   ) { }
 
   ngOnInit() {
-    this.plt.ready().then(() => {
-      //this.getCronograma()
-      this.getMethod()
-    });
     this.presentLoadingWithOptions();
+    this.plt.ready().then(() => {
+      this.getCronograma()
+    });
   }
 
 
-  //loading 
+  //loading
   async presentLoadingWithOptions() {
     const loading = await this.loadingController.create({
       spinner: null,
@@ -99,31 +98,31 @@ export class HomePage implements OnInit {
 
   getCronograma(){
     this.scheduleService.getCronograma().then(data => {
-      this.cronograma = data;
+      this.cronograma = JSON.parse(data);
       console.log(data);
-      console.log("homepageCronogr");
+      // console.log("homepageCronogr");
     });
   }
-  getMethod(){
-    this.scheduleService.getMethod("cronograma").then(data => {
-      this.cronograma = data;
-
-      console.log(data);
-      console.log(this.cronograma);
-      console.log("homepageMethod");
-      
-      this.color = this.cronograma[0].dias[0].atividades[0].categoria;
-      this.atividade = data[0].dias[0].atividades;
-      console.log(this.atividade); 
-      this.day = data[0].dias;
-      console.log(this.day);
-      console.log(this.day[0].atividades[0].mesas);
-      console.log(this.day[0].atividades[0].mesas.length);
-      console.log(this.day[0].atividades[0].mesas['length']);
-
-     
-    });
-  }
+  // getMethod(){
+  //   this.scheduleService.getMethod("cronograma").then(data => {
+  //     this.cronograma = JSON.parse(data);
+  //
+  //     console.log(data);
+  //     console.log(this.cronograma);
+  //     console.log("homepageMethod");
+  //
+  //     this.color = this.cronograma[0].dias[0].atividades[0].categoria;
+  //     this.atividade = data[0].dias[0].atividades;
+  //     console.log(this.atividade);
+  //     this.day = data[0].dias;
+  //     console.log(this.day);
+  //     console.log(this.day[0].atividades[0].mesas);
+  //     console.log(this.day[0].atividades[0].mesas.length);
+  //     console.log(this.day[0].atividades[0].mesas['length']);
+  //
+  //
+  //   });
+  //}
 
 
 
@@ -139,7 +138,7 @@ export class HomePage implements OnInit {
         console.log("passou mermao");
         return day.data.split('-')[2] == day;
 
-      
+
 
     });
   }
@@ -150,7 +149,7 @@ export class HomePage implements OnInit {
 
   cor(color){
  //   return {'background': 'linear-gradient(90deg, '+ color.cor_hex +' 15px, #FFFFFF 15px)'};
- // if( color == 2)  
+ // if( color == 2)
   return {'background': 'linear-gradient(90deg, 15px, #FFFFFF 15px)'};
   }
 

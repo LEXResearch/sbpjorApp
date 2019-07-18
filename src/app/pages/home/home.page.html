@@ -8,7 +8,7 @@
 
 <ion-content>
   <ion-grid no-padding>
-    
+
     <!-- {{ cronograma[0].titulo }}
     <p>data</p>
     {{ cronograma[0].data }}
@@ -28,14 +28,14 @@
 
     <span> dia 2 aqui</span>{{ cronograma[0].dias[1].dia }} <span> End stop</span> -->
 
-<!--   
+<!--
     <ion-button size="medium" (click)="getCronograma()" expand="block" color="azul">LogarCronog</ion-button>
     <ion-button size="medium" (click)="getMethod()" expand="block" color="azul">LogarMethod</ion-button> -->
 
-    
+
     <ion-slides options="slideOpts">
         <ion-slide *ngFor="let dia of cronograma[0].dias; let i = index">
-          
+
           <ion-list lines="none">
             <ion-row justify-content-center class="ion-padding-bottom">
               <ion-col size=4 align-self-center class="highlight tamDayBox">
@@ -44,15 +44,15 @@
                   <ion-row justify-content-center class="text-active">{{ i }}</ion-row> <!--tirar dps, index counter -->
               </ion-col>
             </ion-row>
-            <ion-row  class="ion-margin-top" *ngFor="let atividades of cronograma[0].dias[i].atividades; let j = index"  [ngStyle]=cor(color)> <!-- segundo laço para passar dentro de cada atividade dentro de cada dias-->
+            <ion-row  class="ion-margin-top" *ngFor="let atividades of cronograma[0].dias[i].atividades; let j = index"  > <!-- segundo laço para passar dentro de cada atividade dentro de cada dias-->
 <!--*ngFor="let atividade of cronogramaByDay(7)" [ngStyle]=cor(atividade) -->
                     <ion-col size=2 >
                       <ion-row><ion-col class="hora">{{ hora(cronograma[0].dias[i].atividades[j].hora) }}h</ion-col></ion-row> <!--.split('T')[1].split(':')[0]-->
                     </ion-col>
 
                     <!-- <ion-col> i e j
-                        <p *ngFor="let atividades of cronograma[0].dias[i].atividades; let j = index"> 
-                          {{ i }} - {{ j }} 
+                        <p *ngFor="let atividades of cronograma[0].dias[i].atividades; let j = index">
+                          {{ i }} - {{ j }}
                         </p>
                     </ion-col> -->
 
@@ -87,20 +87,20 @@
                         <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
                       </button>
                     </ion-col>
-<!-- 
+<!--
                     <ion-col size=2 class="ion-padding-end">
                       <button ion-button outline (click)="expandItem(atividade)" class="my-button">
                         <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
                         <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
                       </button>
                     </ion-col>
-  
+
  -->
             </ion-row>
           </ion-list>
         </ion-slide>
 
-       
+
 
       </ion-slides>
 
@@ -109,12 +109,12 @@
 
 <!-- antigo abaixo -->
 
-      
+
 
 
   <!-- <ion-slides options="slideOpts">
     <ion-slide>
-      
+
       <ion-list lines="none">
         <ion-row justify-content-center class="ion-padding-bottom">
           <ion-col size=4 align-self-center class="highlight tamDayBox">

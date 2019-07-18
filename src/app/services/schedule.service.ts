@@ -152,7 +152,7 @@ export class ScheduleService {
 
   getCronograma(forceRefresh: boolean = true){
     if(this.token != null){
-      return new Promise((resolve, rjc) => {
+      return new Promise<any>((resolve, rjc) => {
         this.getMethod('cronograma', forceRefresh).then(data => {
           this.cronograma = data;
           resolve(this.cronograma);
@@ -161,7 +161,7 @@ export class ScheduleService {
     } else {
       this.getLocalData('token').then(data => {
         this.token = data;
-        return new Promise((resolve, rjc) => {
+        return new Promise<any>((resolve, rjc) => {
           this.getMethod('crograma', forceRefresh).then(data=>{
             this.cronograma = data;
             resolve(data);
