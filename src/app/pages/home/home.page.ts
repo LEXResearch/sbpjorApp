@@ -17,62 +17,7 @@ export class HomePage implements OnInit {
   cronograma: any;
   atividade: any;
   day: any;
-  
-//   index = 0;
-//   addWarmUp() {
-//     this.warmupTemp.push(this.warmpup[this.index]);
-//    this.index++;
-// }
-
- 
-//apenas para usar ionicServe
-semOpcoes =
-[
-    {
-    "titulo": "Teste",
-    "data": "2019-06-17T17:44:56Z",
-    "is_active": true,
-    "dias": [
-        {
-            "dia": 1,
-            "semana": "SEG",
-            "atividades": [
-                {
-                    "titulo": "Abertura",
-                    "descricao": "dasdasdasdas",
-                    "local": "dasdasda",
-                    "hora": "2019-06-17T17:47:44Z",
-                    "categoria": 1,
-                    "mesas": [
-                        1
-                    ]
-                }
-            ]
-        },
-        {
-            "dia": 2,
-            "semana": "TER",
-            "atividades": [
-                {
-                    "titulo": "Finalização",
-                    "descricao": "AlgumaDescrição",
-                    "local": "LocalFinal",
-                    "hora": "2019-07-17T12:00:00Z",
-                    "categoria": 2,
-                    "mesas": [
-                        2
-                    ]
-                }
-            ]
-        }
-    ]
-  }
-]
-
- 
- 
-
-
+  color: any;  
 
 
   slideOpts = {
@@ -101,7 +46,6 @@ semOpcoes =
       this.getMethod()
     });
     this.presentLoadingWithOptions();
-    console.log(this.semOpcoes);
   }
 
 
@@ -148,6 +92,7 @@ semOpcoes =
   //   });
   // }
 
+
   goDescription(id){
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
   }
@@ -167,6 +112,7 @@ semOpcoes =
       console.log(this.cronograma);
       console.log("homepageMethod");
       
+      this.color = this.cronograma[0].dias[0].atividades[0].categoria;
       this.atividade = data[0].dias[0].atividades;
       console.log(this.atividade); 
       this.day = data[0].dias;
@@ -174,6 +120,7 @@ semOpcoes =
       console.log(this.day[0].atividades[0].mesas);
       console.log(this.day[0].atividades[0].mesas.length);
       console.log(this.day[0].atividades[0].mesas['length']);
+
      
     });
   }
@@ -201,8 +148,10 @@ semOpcoes =
     return item.split('T')[1].split(":")[0];//item.data
   }
 
-  cor(atividade){
-    return {'background': 'linear-gradient(90deg, '+ atividade.cor_hex +' 15px, #FFFFFF 15px)'};
+  cor(color){
+ //   return {'background': 'linear-gradient(90deg, '+ color.cor_hex +' 15px, #FFFFFF 15px)'};
+ // if( color == 2)  
+  return {'background': 'linear-gradient(90deg, 15px, #FFFFFF 15px)'};
   }
 
   expandItem(item){
