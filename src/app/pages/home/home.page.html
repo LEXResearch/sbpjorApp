@@ -59,15 +59,15 @@
 
       <ion-slides options="slideOpts"> 
         <ion-slide *ngFor="let dia of cronograma[0].dias">
-            <ion-row justify-content-center class="ion-padding-bottom">
-                <ion-col size=4 align-self-center class="highlight tamDayBox">
-                    <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
-                    <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
-                </ion-col>
-                
-              </ion-row>
+          
           <ion-list lines="none">
-           
+            <ion-row justify-content-center class="ion-padding-bottom">
+              <ion-col size=4 align-self-center class="highlight tamDayBox">
+                  <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
+                  <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
+              </ion-col>
+              
+            </ion-row>
             <ion-row  class="ion-margin-top" *ngFor="let atividade of dia.atividades">
 <!--*ngFor="let atividade of cronogramaByDay(7)" [ngStyle]=cor(atividade) -->
                     <ion-col size=2>
