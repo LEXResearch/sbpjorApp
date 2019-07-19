@@ -2,6 +2,8 @@ import { Platform, MenuController, ModalController } from '@ionic/angular';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { Router } from '@angular/router';
 
+import { ToastController } from '@ionic/angular';
+
 import { DescriptionPage } from '../../modals/description/description.page';
 
 import { ScheduleService } from '../../services/schedule.service';
@@ -38,7 +40,8 @@ export class HomePage implements OnInit {
     private menu: MenuController,
     private router: Router,
     public modalController: ModalController,
-    public loadingController: LoadingController
+    public loadingController: LoadingController,
+    public toastController: ToastController,
 
   ) { }
 
@@ -46,10 +49,26 @@ export class HomePage implements OnInit {
     this.presentLoadingWithOptions();
     this.plt.ready().then(() => {
       this.scheduleService.getCronograma().then(d => {
-        this.cronograma = d;
+        this.cronograma = JSON.parse(d);
+        console.log(this.cronograma);
+        // this.presentToast("deu certo bro");
+        this.loading.dismiss();
+      }).catch(error => {
+        // this.presentToast("deu erro irmao");
+        this.loading.dismiss();
       });
+      
     });
-    this.loading.dismiss();
+    
+  }
+
+  async presentToast(message) {
+    const toast = await this.toastController.create({
+      message: message,
+      duration: 2000,
+      position: 'bottom',
+    });
+    toast.present();
   }
 
 
@@ -104,7 +123,8 @@ export class HomePage implements OnInit {
     this.scheduleService.getCronograma().then(data => {
       this.cronograma = JSON.parse(data);
       console.log(data);
-      // console.log("homepageCronogr");
+      console.log(this.cronograma);
+      console.log("homepageCronogr");
     });
   }
   // getMethod(){

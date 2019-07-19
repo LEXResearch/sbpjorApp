@@ -87,6 +87,8 @@
     <plugin name="cordova-plugin-advanced-http" spec="^2.1.1">
         <variable name="OKHTTP_VERSION" value="3.10.0" />
     </plugin>
+    <allow-navigation href="http://192.168.184.238:8100" />
+    <allow-navigation href="http://192.168.184.238:8101" />
     <engine name="android" spec="^8.0.0" />
     <engine name="browser" spec="5.0.4" />
 </widget>

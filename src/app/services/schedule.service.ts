@@ -125,7 +125,7 @@ export class ScheduleService {
   //   })
   // }
 
-  getMethod(what: string, forceRefresh: boolean = false){
+  getMethod(what: string, forceRefresh: boolean = true){
     return new Promise((resolve, reject) => {
       if(!forceRefresh){
         this.getLocalData(what).then(data => {
@@ -136,7 +136,7 @@ export class ScheduleService {
         this.http.get(API_URL+what+"/?format=json", {}, {'Authorization': this.token })
         //token => {'JWT token'}
          .then(res => {
-           res = JSON.parse(res.data);
+           res = res.data;
            this.setLocalData(what, res);
            resolve(res);
         })
@@ -171,7 +171,7 @@ export class ScheduleService {
     }
   }
 
-  getMesas(forceRefresh: boolean = false){
+  getMesas(forceRefresh: boolean = true){
     if(this.token != null){
       return new Promise((resolve, rjc) => {
         this.getMethod('mesa', forceRefresh).then(data => {
@@ -192,7 +192,7 @@ export class ScheduleService {
     }
   }
 
-  getTrabalhos(forceRefresh: boolean = false){
+  getTrabalhos(forceRefresh: boolean = true){
     if(this.token != null){
       return new Promise((resolve, rjc) => {
         this.getMethod('trabalho', forceRefresh).then(data => {
