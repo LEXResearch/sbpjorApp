@@ -10,6 +10,24 @@
     </ion-header>
     <ion-content>
       <ion-list lines="none" margin-left margin-top>
+        <ion-item (click)="home()" style="font-size: 18px; font-weight:400; color: #58595b;">
+          <ion-icon [src]="/assets/icon/cronograma.svg" slot="start" style="font-size: 32px;"></ion-icon>
+          <ion-label>
+            {{ Cronograma }}
+          </ion-label>
+        </ion-item>
+        <ion-item (click)="goSearch()" style="font-size: 18px; font-weight:400; color: #58595b;">
+          <ion-icon [src]="/assets/icon/pesquisa.svg" slot="start" style="font-size: 32px;"></ion-icon>
+          <ion-label>
+            {{ Pesquisa }}
+          </ion-label>
+        </ion-item>
+        <ion-item (click)="goFav()" style="font-size: 18px; font-weight:400; color: #58595b;">
+          <ion-icon [src]="/assets/icon/favoritos.svg" slot="start" style="font-size: 32px;"></ion-icon>
+          <ion-label>
+            {{ Trabalhos Favoritos }}
+          </ion-label>
+        </ion-item>
         <ion-item *ngFor="let p of appPages" (click)="openPage(p)" [disabled]="p.active" style="font-size: 18px; font-weight:400; color: #58595b;">
           <ion-icon [src]="p.icon" slot="start" style="font-size: 32px;"></ion-icon>
           <ion-label>

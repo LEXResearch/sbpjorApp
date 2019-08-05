@@ -3,7 +3,7 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { ScheduleService } from '../../services/schedule.service';
 
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
 
@@ -16,16 +16,15 @@ import { LoadingController } from '@ionic/angular';
   styleUrls: ['./search.page.scss'],
 })
 export class SearchPage implements OnInit {
-  
-  trabalhos: any;
 
+  trabalhos: any;
   filteredTrabalhos: any;
 
-  favoritos: Array<number>;
+  favoritos: any;
 
   loading: any;
 
-  searchMode: string = "geral";
+  switcher: number;
   searchInput: string;
 
   mesa: any;
@@ -35,20 +34,33 @@ export class SearchPage implements OnInit {
               public alertController: AlertController,
               private router: Router,
               public loadingController: LoadingController
-  ) { }
+  )
+  {
+    this.route.queryParams.subscribe(params => {
+      if (this.router.getCurrentNavigation().extras.state) {
+        this.switcher = this.router.getCurrentNavigation().extras.state.mode;
+      }
+    });
+  }
 
   ngOnInit() {
+    this.scheduleService.getTrabalhos().then(res => {
+      this.trabalhos = res;
 
-    // this.getTrabalhos(true);
-    //this.presentLoading();
+      this.favoritos = this.trabalhos.filter((item) =>{
+        if(item.favorito)
+          return item;
+      });
 
+      this.filteredTrabalhos = this.trabalhos;
+    });
   }
   goHome() {
     this.router.navigateByUrl('/home');
   }
   //loading
   // async presentLoading() {
-  //   const 
+  //   const
   //   await loading.present();
 
   //   const { role, data } = await loading.onDidDismiss();
@@ -76,7 +88,7 @@ export class SearchPage implements OnInit {
   //   });
   // }
 
-  
+
 
   favItem(item){
     const index = this.trabalhos.indexOf(item, 0);
@@ -103,7 +115,7 @@ export class SearchPage implements OnInit {
   download(item) {
     //var browser = this.iab.create(item.url, '_system');
   }
-  
+
 
   async popAlert() {
     const alert = await this.alertController.create({
@@ -115,8 +127,8 @@ export class SearchPage implements OnInit {
           text: 'Okay',
           role: 'oKay',
           cssClass: 'popUpSearch buttonPopUp1',
-          
-          
+
+
           handler: () => {
             console.log('Confirm Okay');
           }
@@ -125,7 +137,7 @@ export class SearchPage implements OnInit {
           text: 'Cancel',
           role: 'cancel',
           cssClass: 'popUpSearch buttonPopUp2',
-         
+
 
           handler: (blah) => {
             console.log('Confirm Cancel: nah');
@@ -138,7 +150,7 @@ export class SearchPage implements OnInit {
           handler: () => {
             console.log('Other things');
           }
-          
+
         }
       ]
     });
@@ -147,10 +159,10 @@ export class SearchPage implements OnInit {
     let result = await alert.onDidDismiss();
     console.log(result);
   }
-  
 
- 
-  
+
+
+
 
   searchData($event) {
     switch (this.searchMode) {
@@ -224,32 +236,5 @@ export class SearchPage implements OnInit {
   }
 
 
-// Infinity scroll 
-items: Array <any>=[] ;  
-
-loadData(event) {
-  setTimeout(() => {
-    console.log('Done');
-    this.addMoreItems();
-
-    event.target.complete();
-
-    
-  }, 800);
-}
-
-addMoreItems() {
-  for (let i=0; i<3; i++)
-    this.items.push(i);
-}
-
-// ends here
-
 
 }
-
-
-
- 
-
-

@@ -43,8 +43,8 @@ export class AppComponent {
   initializeApp() {
     this.platform.ready().then(() => {
       this.statusBar.styleDefault();
-      
-      
+
+
       this.schedule.getState().then(d => {
         this.userStatus = d;
         if(d == 'anon' || d == 'logedin') {
@@ -59,14 +59,10 @@ export class AppComponent {
         this.splashScreen.hide();
       });
     });
-    
+
   }
 
   appPages: PageInterface[] = [
-    { title: 'Início', name: 'HomePage', url: '/home', icon: '/assets/icon/home.svg', active: false },
-    { title: 'Cronograma', name: 'HomePage', url: '/home', icon: '/assets/icon/cronograma.svg', active: false },
-    { title: 'Pesquisa', name: 'SearchPage', url: '/search',   icon: '/assets/icon/pesquisa.svg', active: false },
-    { title: 'Trabalhos Favoritos', name: 'Favorite', url: '/favorite',   icon: '/assets/icon/favoritos.svg', active: false },
     { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
     { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
     { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
@@ -75,7 +71,7 @@ export class AppComponent {
     this.userStatus = this.schedule.getStateVar();
     console.log(this.userStatus);
   }
-  
+
   openPage(page){
     this.menu.close();
     this.router.navigateByUrl(page.url);
@@ -89,6 +85,31 @@ export class AppComponent {
       this.menu.close();
       this.router.navigateByUrl('/register');
     });
+  }
+
+  home(){
+    this.menu.close();
+    this.router.navigateByUrl('/home');
+  }
+
+  goFav(){
+    let navExtra: NavigationExtras = {
+      state: {
+        mode: 1 // this say to login page to display a modal to login
+      }
+    }
+    this.menu.close();
+    this.router.navigate(['search'], navExtra);
+  }
+
+  goSearch(){
+      let navExtra: NavigationExtras = {
+        state: {
+          mode: 0 // this say to login page to display a modal to login
+        }
+      }
+      this.menu.close();
+      this.router.navigate(['search'], navExtra);
   }
 
 }
