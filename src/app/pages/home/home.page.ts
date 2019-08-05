@@ -48,16 +48,7 @@ export class HomePage implements OnInit {
   ngOnInit() {
     this.presentLoadingWithOptions();
     this.plt.ready().then(() => {
-      this.scheduleService.getCronograma().then(d => {
-        this.cronograma = JSON.parse(d);
-        console.log(this.cronograma);
-        // this.presentToast("deu certo bro");
-        this.loading.dismiss();
-      }).catch(error => {
-        // this.presentToast("deu erro irmao");
-        this.loading.dismiss();
-      });
-      
+      this.loadData(true);
     });
     
   }
@@ -104,88 +95,34 @@ export class HomePage implements OnInit {
     return await modal.present();
   }
 
-  // loadData(refresh = false, refresher?) {
-  //   this.scheduleService.getCronograma(refresh).subscribe(res => {
-  //     this.cronograma = res;
-  //     console.log(res);
-  //     if (refresher) {
-  //       refresher.target.complete();
-  //     }
-  //   });
-  // }
+  loadData(refresh = false) {
+    this.scheduleService.getCronograma(refresh)
+    .then(res => {
+      this.cronograma = JSON.parse(res);
+      this.loading.dismiss();
+
+    }).catch(error => {
+        this.presentToast("Falha ao carregar informações");
+        this.loading.dismiss();
+      });
+
+  }
 
 
   goDescription(id){
     this.router.navigateByUrl('/description/{{ id }}/mesa-livre');
   }
 
-  getCronograma(){
-    this.scheduleService.getCronograma().then(data => {
-      this.cronograma = JSON.parse(data);
-      console.log(data);
-      console.log(this.cronograma);
-      console.log("homepageCronogr");
-    });
-  }
-  // getMethod(){
-  //   this.scheduleService.getMethod("cronograma").then(data => {
-  //     this.cronograma = JSON.parse(data);
-  //
-  //     console.log(data);
-  //     console.log(this.cronograma);
-  //     console.log("homepageMethod");
-  //
-  //     this.color = this.cronograma[0].dias[0].atividades[0].categoria;
-  //     this.atividade = data[0].dias[0].atividades;
-  //     console.log(this.atividade);
-  //     this.day = data[0].dias;
-  //     console.log(this.day);
-  //     console.log(this.day[0].atividades[0].mesas);
-  //     console.log(this.day[0].atividades[0].mesas.length);
-  //     console.log(this.day[0].atividades[0].mesas['length']);
-  //
-  //
-  //   });
-  //}
-
-
-
-  // cronogramaByDay(day){
-  //   return this.cronograma.filter((item) => {
-  //     if (item.data != null)
-  //      return item.data.split('-')[2] == day;
-  //   });
-  // }
-  cronogramaByDay(day){
-    return this.cronograma.filter((day) => {
-      if (day.dias[0] != null)
-        console.log("passou mermao");
-        return day.data.split('-')[2] == day;
-
-
-
-    });
-  }
-
   hora(item){
     return item.split('T')[1].split(":")[0];//item.data
   }
 
-  cor(color){
- //   return {'background': 'linear-gradient(90deg, '+ color.cor_hex +' 15px, #FFFFFF 15px)'};
- // if( color == 2)
-  return {'background': 'linear-gradient(90deg, 15px, #FFFFFF 15px)'};
+  backgroundColor(categoria){
+    return {'background': 'linear-gradient(90deg, '+ categoria.cor_hex +' 15px, #FFFFFF 15px)'};
   }
 
   expandItem(item){
-        this.cronograma.map((listItem) => {
-            if(item == listItem){
-                listItem.open = !listItem.open;
-            } else {
-                listItem.open = false;
-            }
-            return listItem;
-        });
+        item.open = !item.open;
   }
 
 }
