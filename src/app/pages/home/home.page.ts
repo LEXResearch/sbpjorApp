@@ -68,6 +68,7 @@ export class HomePage implements OnInit {
     this.loading = await this.loadingController.create({
       spinner: null,
       message: 'Por favor espere...',
+      duration: 10000,
       translucent: true,
       cssClass: 'custom-class custom-loading'
     });

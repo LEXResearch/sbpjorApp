@@ -7,10 +7,10 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid no-padding>
+  <ion-grid> <!--no-padding--> 
       <ion-slides options="slideOpts"> 
         <ion-slide *ngFor="let dia of cronograma[0].dias">
-          <ion-list lines="none">
+          <ion-list no-lines>
 
             <ion-row justify-content-center class="ion-padding-bottom">
               <ion-col size=4 align-self-center class="highlight tamDayBox">
@@ -19,19 +19,19 @@
               </ion-col>
             </ion-row>
 
-            <ion-row  class="ion-margin-top" *ngFor="let atividade of dia.atividades" [ngStyle]=backgroundColor(atividade.categoria)>
+            <ion-row  class="ion-margin-top ion-space" *ngFor="let atividade of dia.atividades" [ngStyle]=backgroundColor(atividade.categoria)>
 
-              <ion-col size=2>
-                <ion-row><ion-col class="hora">{{ hora(atividade.hora) }}h</ion-col></ion-row>
+              <ion-col col-2>
+                <ion-row><ion-col class="hora" margin-left>{{ hora(atividade.hora) }}h</ion-col></ion-row>
               </ion-col>
 
-              <ion-col size=8>
+              <ion-col col-8>
                 <ion-row [ngClass]="{'title-active': atividade.open, 'title': !atividade.open}"><ion-col> {{ atividade.titulo }}</ion-col></ion-row>
                 <ion-row [ngClass]="{'location-active': atividade.open, 'location': !atividade.open}"><ion-col><ion-icon name="compass"></ion-icon> {{ atividade.local }}</ion-col></ion-row> 
-                <ion-row [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}"class="description">
+                <ion-row text-wrap [ngClass]="{'section-active': atividade.open, 'section': !atividade.open}"class="description">
                   <ion-col>
                     <ion-row>
-                      <br>{{ atividade.descricao }}<br><br>
+                      <br>{{ atividade.descricao }} <br><br>
                     </ion-row>
                     <ion-row justify-content-center>
                       <ion-button  color="main" fill="outline" expand="block"> Ver mesas </ion-button>
@@ -41,7 +41,7 @@
                 </ion-row>
               </ion-col>
 
-              <ion-col size=2 class="ion-padding-end">
+              <ion-col col-3 class="ion-padding-end ion-spaceEnd">
                 <button ion-button outline (click)="expandItem(atividade)" class="my-button">
                   <ion-icon *ngIf="!atividade.open" name="add"></ion-icon>
                   <ion-icon *ngIf="atividade.open" name="remove"></ion-icon>
