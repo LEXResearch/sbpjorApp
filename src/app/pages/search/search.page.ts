@@ -3,7 +3,7 @@ import { ActionSheetController, AlertController } from '@ionic/angular';
 
 import { ScheduleService } from '../../services/schedule.service';
 
-import { Router, NavigationExtras } from '@angular/router';
+import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
 
@@ -33,7 +33,8 @@ export class SearchPage implements OnInit {
               private scheduleService: ScheduleService,
               public alertController: AlertController,
               private router: Router,
-              public loadingController: LoadingController
+              public loadingController: LoadingController,
+              private route: ActivatedRoute,
   )
   {
     this.route.queryParams.subscribe(params => {
@@ -164,36 +165,36 @@ export class SearchPage implements OnInit {
 
 
 
-  searchData($event) {
-    switch (this.searchMode) {
-      case "autor":{
-        this.filteredTrabalhos = this.trabalhos.filter((item) => {
-          console.log(item.searchInput);
-          return item.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
-        });
-        break;
-      }
-      case "titulo":{
-        this.filteredTrabalhos = this.trabalhos.filter((item) => {
-          return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
-        });
-        break;
-      }
-      case "geral":{
-        this.filteredTrabalhos = this.trabalhos.filter((item) => {
-          return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1 ||
-          item.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1
-        });
-        break;
-      }
-      case "mesas":{
-        this.filteredTrabalhos = this.trabalhos.filter((item) => {
-          return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
-        });
-        break;
-      }
-    }
-  }
+  // searchData($event) {
+  //   switch (this.searchMode) {
+  //     case "autor":{
+  //       this.filteredTrabalhos = this.trabalhos.filter((item) => {
+  //         console.log(item.searchInput);
+  //         return item.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
+  //       });
+  //       break;
+  //     }
+  //     case "titulo":{
+  //       this.filteredTrabalhos = this.trabalhos.filter((item) => {
+  //         return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
+  //       });
+  //       break;
+  //     }
+  //     case "geral":{
+  //       this.filteredTrabalhos = this.trabalhos.filter((item) => {
+  //         return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1 ||
+  //         item.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1
+  //       });
+  //       break;
+  //     }
+  //     case "mesas":{
+  //       this.filteredTrabalhos = this.trabalhos.filter((item) => {
+  //         return item.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1;
+  //       });
+  //       break;
+  //     }
+  //   }
+  // }
 
   async presentActionSheet() {
     const actionSheet = await this.actionSheetController.create({

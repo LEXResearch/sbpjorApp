@@ -28,12 +28,18 @@
             {{ Trabalhos Favoritos }}
           </ion-label>
         </ion-item>
-        <ion-item *ngFor="let p of appPages" (click)="openPage(p)" [disabled]="p.active" style="font-size: 18px; font-weight:400; color: #58595b;">
-          <ion-icon [src]="p.icon" slot="start" style="font-size: 32px;"></ion-icon>
-          <ion-label>
-            {{ p.title }}
-          </ion-label>
-        </ion-item>
+        <ion-item (click)="openPage('/contact')" style="font-size: 18px; font-weight:400; color: #58595b;">
+            <ion-icon [src]="/assets/icon/contato.svg" slot="start" style="font-size: 32px;"></ion-icon>
+            <ion-label>
+              {{ Fale Conosco }}
+            </ion-label>
+          </ion-item>
+          <ion-item (click)="openPage('/about')" style="font-size: 18px; font-weight:400; color: #58595b;">
+              <ion-icon [src]="/assets/icon/info.svg" slot="start" style="font-size: 32px;"></ion-icon>
+              <ion-label>
+                {{ Sobre }}
+              </ion-label>
+            </ion-item>
       </ion-list>
       <ion-button (click)="goToRegister()" expand="block" color="" *ngIf="userStatus == 'anon' || userStatus == 'logout'"> ENTRAR </ion-button>
       <ion-button (click)="doLogout()" expand="block" color="" *ngIf="userStatus == 'logedin'"> SAIR </ion-button>

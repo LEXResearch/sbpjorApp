@@ -69,6 +69,7 @@ export class HomePage implements OnInit {
       spinner: null,
       message: 'Por favor espere...',
       translucent: true,
+      duration: 10000,
       cssClass: 'custom-class custom-loading'
     });
     return await this.loading.present();

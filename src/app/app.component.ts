@@ -4,7 +4,7 @@ import { Platform } from '@ionic/angular';
 import { SplashScreen } from '@ionic-native/splash-screen/ngx';
 import { StatusBar } from '@ionic-native/status-bar/ngx';
 
-import { Router } from '@angular/router';
+import { Router, NavigationExtras } from '@angular/router';
 
 import { MenuController } from '@ionic/angular';
 
@@ -72,9 +72,9 @@ export class AppComponent {
     console.log(this.userStatus);
   }
 
-  openPage(page){
+  openPage(link){
     this.menu.close();
-    this.router.navigateByUrl(page.url);
+    this.router.navigateByUrl(link);
   }
   goToRegister(){
     this.menu.close();
