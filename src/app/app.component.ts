@@ -62,11 +62,6 @@ export class AppComponent {
 
   }
 
-  appPages: PageInterface[] = [
-    { title: 'Fale Conosco', name: 'TalkUs', url: '/contact',   icon: '/assets/icon/contato.svg', active: false },
-    { title: 'Meus Dados', name: 'SearchPage', url: '/contact',   icon: '/assets/icon/configuracao.svg', active: true },
-    { title: 'Sobre', name: 'AboutPage', url: '/about',   icon: '/assets/icon/info.svg', active: false },
-  ]
   refresh(){
     this.userStatus = this.schedule.getStateVar();
     console.log(this.userStatus);
@@ -85,6 +80,22 @@ export class AppComponent {
       this.menu.close();
       this.router.navigateByUrl('/register');
     });
+  }
+
+  icone(i){
+    switch(i){
+      case 'home':
+        return "/assets/icon/cronograma.svg";
+      case 'pesquisa':
+        return "/assets/icon/pesquisa.svg";
+      
+      case 'favoritos':
+        return "/assets/icon/favoritos.svg";
+      
+      case 'contato':
+        return "/assets/icon/contato.svg";
+    }
+      
   }
 
   home(){
