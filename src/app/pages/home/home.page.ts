@@ -18,8 +18,7 @@ export class HomePage implements OnInit {
 
   cronograma: any;
   atividade: any;
-  day: any;
-  color: any;
+  mesas: any;
 
 
   loading: any;
@@ -78,10 +77,15 @@ export class HomePage implements OnInit {
 
 
   async openModal(atividade) {
+    var mesas = this.mesas.filter((m) => {
+      if (atividade.mesas.includes(m.numero))
+        return m;
+    })
     const modal = await this.modalController.create({
       component: DescriptionPage,
       componentProps: {
-        "atividade": atividade
+        "atividade": atividade,
+        "mesas": mesas
       },
       showBackdrop: false,
     });
@@ -106,7 +110,10 @@ export class HomePage implements OnInit {
         this.presentToast("Falha ao carregar informações");
         this.loading.dismiss();
       });
-
+    this.scheduleService.getMesas(refresh)
+    .then(info => {
+      this.mesas = JSON.parse(info);
+    });
   }
 
 

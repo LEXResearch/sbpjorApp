@@ -9,6 +9,7 @@ import { ModalController } from '@ionic/angular';
 export class DescriptionPage implements OnInit {
 
   @Input() atividade: any;
+  @Input() mesas: any;
 
   mesasMode: string;
 
@@ -34,7 +35,7 @@ export class DescriptionPage implements OnInit {
   }
 
   mesasFilter(b){
-    return this.atividade.mesas.filter((mesa) => {
+    return this.mesas.filter((mesa) => {
       return mesa.coordenada == b;
     });
   }

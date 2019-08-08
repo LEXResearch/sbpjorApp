@@ -173,7 +173,7 @@ export class ScheduleService {
 
   getMesas(forceRefresh: boolean = true){
     if(this.token != null){
-      return new Promise((resolve, rjc) => {
+      return new Promise<any>((resolve, rjc) => {
         this.getMethod('mesa', forceRefresh).then(data => {
           this.mesas = data;
           resolve(this.mesas);
@@ -182,7 +182,7 @@ export class ScheduleService {
     } else {
       this.getLocalData('token').then(data => {
         this.token = data;
-        return new Promise((resolve, rjc) => {
+        return new Promise<any>((resolve, rjc) => {
           this.getMethod('mesa', forceRefresh).then(data=>{
             this.mesas = data;
             resolve(data);
