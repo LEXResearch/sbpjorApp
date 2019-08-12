@@ -101,7 +101,6 @@ export class HomePage implements OnInit {
     .then(res => {
       this.cronograma = JSON.parse(res);
       this.loading.dismiss();
-
     }).catch(error => {
         this.presentToast("Falha ao carregar informações");
         this.loading.dismiss();
