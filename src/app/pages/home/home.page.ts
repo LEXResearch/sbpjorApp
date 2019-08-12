@@ -69,6 +69,7 @@ export class HomePage implements OnInit {
       message: 'Por favor espere...',
       duration: 10000,
       translucent: true,
+      duration: 10000,
       cssClass: 'custom-class custom-loading'
     });
     return await this.loading.present();
@@ -105,7 +106,6 @@ export class HomePage implements OnInit {
     .then(res => {
       this.cronograma = JSON.parse(res);
       this.loading.dismiss();
-
     }).catch(error => {
         this.presentToast("Falha ao carregar informações");
         this.loading.dismiss();

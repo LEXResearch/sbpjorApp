@@ -19,7 +19,11 @@ export class ScheduleService {
   mesas: any;
 
   user: string = '';
-  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoyLCJ1c2VybmFtZSI6InZ0b2duaSIsImV4cCI6MTU2NTEwMDI4NywiZW1haWwiOiJ0b2duaXZpbmlAaG90bWFpbC5jb20ifQ._RpbJCjAEPBiDQchxKilY7KwwaZ7UjSK7cdchDEHWhQ';
+<<<<<<< HEAD
+  token: string = '';
+=======
+  token: string = 'JWT eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1c2VyX2lkIjoxLCJ1c2VybmFtZSI6ImNhcG1heWVyIiwiZXhwIjoxNTY1MjgzODY5LCJlbWFpbCI6ImhlbnJpcW1heWVyQGdtYWlsLmNvbSJ9.M2lCuZsV9bkM9rOTPjzMq12_py-Vik50WtcEkcB_rtc';
+>>>>>>> fixFavoritos
   userStatus: string = 'logout';
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
@@ -142,6 +146,9 @@ export class ScheduleService {
         })
         .catch(error => {
             console.log(error);
+            this.getLocalData(what).then(data => {
+              resolve(data);
+            });
         });
       }
     })
@@ -194,16 +201,16 @@ export class ScheduleService {
 
   getTrabalhos(forceRefresh: boolean = true){
     if(this.token != null){
-      return new Promise((resolve, rjc) => {
+      return new Promise<any>((resolve, rjc) => {
         this.getMethod('trabalho', forceRefresh).then(data => {
           this.trabalhos = data;
-          resolve(this.mesas);
+          resolve(this.trabalhos);
         })
       })
     } else {
       this.getLocalData('token').then(data => {
         this.token = data;
-        return new Promise((resolve, rjc) => {
+        return new Promise<any>((resolve, rjc) => {
           this.getMethod('trabalho', forceRefresh).then(data=>{
             this.trabalhos = data;
             resolve(data);
@@ -230,21 +237,42 @@ export class ScheduleService {
     }
   }
 
-  sendFavorito(trabalho: number){
+  sendFavorito(trabalho: number, fav: boolean){
     let data = { 'trabalho': trabalho };
-    if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
-      this.localService.storeRequest(API_URL+"favorito/", data);
-    }
-    else {
-      this.http.post(API_URL+"favorito/", data, {'Authorization': this.token })
-      .then(data => {
-        return true;
-      })
-      .catch(err => {
+    
+    if(fav){
+      if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
         this.localService.storeRequest(API_URL+"favorito/", data);
-        return false;
-      });
+        console.log("salvamos para dps");
+      }
+      else {
+        this.http.post(API_URL+"favorito/", data, {'Authorization': this.token })
+        .then(data => {
+          console.log("post done ");
+          return true;
+        })
+        .catch(err => {
+          this.localService.storeRequest(API_URL+"favorito/", data);
+          console.log("faio o http salvamos");
+          return false;
+        });
+      }
+    } else {
+      if (this.networkService.getCurrentNetworkStatus() == ConnectionStatus.Offline) {
+        this.localService.storeRequest(API_URL+"favorito/", data);
+      }
+      else {
+        this.http.post(API_URL+"favorito/", data, {'Authorization': this.token })
+        .then(data => {
+          return true;
+        })
+        .catch(err => {
+          this.localService.storeRequest(API_URL+"favorito/", data);
+          return false;
+        });
+      }
     }
+    
   }
 
   sendDownload(trabalho: number){
