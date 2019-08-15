@@ -7,7 +7,7 @@
 </ion-header>
 
 <ion-content>
-  <ion-grid no-padding> <!----> 
+  <ion-grid no-padding> 
       <ion-slides options="slideOpts"> 
         <ion-slide *ngFor="let dia of cronograma[0].dias">
           <ion-list lines="none" style="width: 100%;">
@@ -34,7 +34,7 @@
                       <br>{{ atividade.descricao }}<br><br>
                     </ion-row>
                     <ion-row justify-content-center>
-                      <ion-button  color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
+                      <ion-button *ngIf="atividade.mesas.length" color="main" fill="outline" expand="block" (click)="openModal(atividade)"> Ver mesas </ion-button>
                               <!-- (click)="openModal(atividade)"  -->
                     </ion-row>
                   </ion-col>

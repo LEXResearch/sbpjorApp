@@ -18,7 +18,7 @@ export class HomePage implements OnInit {
 
   cronograma: any;
   atividade: any;
-  mesas: any;
+  mesas: any = [];
 
 
   loading: any;
@@ -77,6 +77,11 @@ export class HomePage implements OnInit {
 
 
   async openModal(atividade) {
+    if(!this.mesas){
+      this.scheduleService.getMesas().then(m=>{
+        this.mesas = JSON.parse(m);  
+      })
+    }
     var mesas = this.mesas.filter((m) => {
       if (atividade.mesas.includes(m.numero))
         return m;

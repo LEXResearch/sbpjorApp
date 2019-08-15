@@ -31,7 +31,7 @@
       </ion-segment>
   <ion-row [ngSwitch]="mesasMode" class="ion-margin-start">
 
-    <ion-list *ngSwitchCase="'coordenadas'" lines="nones">
+    <ion-list *ngSwitchCase="'coordenadas'" lines="none">
       <h4 text-center *ngIf="!mesasFilter(true).length">Não há mesas coordenadas</h4>
       <ion-item *ngFor="let mesa of mesasFilter(true)"  class="ion-margin-top">
         <div>
@@ -70,7 +70,7 @@
             {{ mesa.descricao }}
           </div>
           <div class="ion-margin-top">
-            <ion-button color="main" fill="outline" (click)="pushButton($event, mesa)">
+            <ion-button color="main" fill="outline" (click)="goSearch(mesa)">
               <ion-icon name="albums" class="ion-margin-end"></ion-icon>
               Ver Trabalhos
             </ion-button>

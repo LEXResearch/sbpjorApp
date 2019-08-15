@@ -47,6 +47,9 @@ export class SearchPage implements OnInit {
       if (this.router.getCurrentNavigation().extras.state) {
         this.switcher = this.router.getCurrentNavigation().extras.state.mode;
       }
+      if (this.router.getCurrentNavigation().extras.state.mesa){
+        this.mesa = this.router.getCurrentNavigation().extras.state.mesa;
+      }
     });
   }
 
@@ -62,6 +65,15 @@ export class SearchPage implements OnInit {
 
       this.filteredTrabalhos = this.trabalhos;
       this.filteredFav = this.favoritos;
+
+      if(this.mesa){
+        this.searchInput = "MESA " + this.mesa.numero;
+
+        this.filteredTrabalhos = this.trabalhos.filter(t =>{
+          if(this.mesa.contains(t.pk))
+            return t;
+        })
+      }
 
       this.loading.dismiss();
     });

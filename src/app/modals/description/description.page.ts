@@ -1,5 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ModalController } from '@ionic/angular';
+import { NavigationExtras, Router } from '@angular/router';
 
 @Component({
   selector: 'app-description',
@@ -14,7 +15,8 @@ export class DescriptionPage implements OnInit {
   mesasMode: string;
 
   constructor(
-    private modalController: ModalController
+    private modalController: ModalController,
+    private router: Router,
   ) { }
 
   ngOnInit() {
@@ -38,6 +40,18 @@ export class DescriptionPage implements OnInit {
     return this.mesas.filter((mesa) => {
       return mesa.coordenada == b;
     });
+  }
+
+  goSearch(mesa){
+    let navExtra: NavigationExtras = {
+      state: {
+        mode: 0, // 
+        mesa: mesa,
+      }
+    }
+    
+    this.router.navigate(['search'], navExtra);
+    this.closeModal();
   }
 
 }
