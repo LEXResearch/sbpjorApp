@@ -20,6 +20,18 @@
 
 <ion-content>
   <ion-grid  [ngSwitch]="switcher" no-padding>
+    <br>
+    <ion-row (click)="changeOrderBy()">
+      <ion-col size=5 class="ion-text-center">
+        Ordenar por:
+      </ion-col>
+      <ion-col size=5 class="ion-text-center">
+          {{ orderBy }}
+      </ion-col>
+      <ion-col size=2>
+          <ion-icon name="arrow-down"></ion-icon>
+      </ion-col>
+    </ion-row>
   <ion-list lines="none" *ngSwitchCase="0" style="width: 100%;">
     <ion-item *ngFor="let item of filteredTrabalhos">
       <ion-row class="ion-margin-top" style="width: 100%;">
@@ -71,9 +83,10 @@
 
 
 
-  <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
+  <!-- <ion-fab vertical="bottom" horizontal="end" slot="fixed" >
       <ion-fab-button (click)="infoSearch()">
         <ion-icon color="white" name="settings"></ion-icon>
       </ion-fab-button>
-  </ion-fab>
+
+  </ion-fab> -->
 </ion-content>

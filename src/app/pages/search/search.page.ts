@@ -6,6 +6,8 @@ import { ScheduleService } from '../../services/schedule.service';
 import { Router, NavigationExtras, ActivatedRoute } from '@angular/router';
 import { LoadingController } from '@ionic/angular';
 
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
+
 
 
 
@@ -29,10 +31,14 @@ export class SearchPage implements OnInit {
 
   mesa: any;
 
+  mesas: any;
+
+  cronograma: any;
+
   switcher: number;
   searchInput: string;
 
-  orderBy: string = 'Título (cresc)';
+  orderBy: string = 'título (cresc)';
   orderByOptions: Array<string> = ['título (cresc)', 'título (descr)', 'número (cresc)', 'número (descr)', 'autor (cresc)', 'autor (descr)'];
 
   constructor(public actionSheetController: ActionSheetController,
@@ -41,6 +47,7 @@ export class SearchPage implements OnInit {
               private router: Router,
               public loadingController: LoadingController,
               private route: ActivatedRoute,
+              private iab: InAppBrowser,
   )
   {
     this.route.queryParams.subscribe(params => {
@@ -67,15 +74,18 @@ export class SearchPage implements OnInit {
       this.filteredFav = this.favoritos;
 
       if(this.mesa){
-        this.searchInput = "MESA " + this.mesa.numero;
-
-        this.filteredTrabalhos = this.trabalhos.filter(t =>{
-          if(this.mesa.contains(t.pk))
-            return t;
-        })
+        this.searchInput = "Mesa " + this.mesa.numero;
       }
-
+      
       this.loading.dismiss();
+
+      this.scheduleService.getMesas(true).then(m => {
+        this.mesas = JSON.parse(m);
+      })
+
+      this.scheduleService.getCronograma(true).then(m =>{
+        this.cronograma = JSON.parse(m);
+      })
     });
   }
   goHome() {
@@ -109,151 +119,91 @@ export class SearchPage implements OnInit {
     }
   }
 
-  download(items) {
-    var browser;
-    for(var x in items){
-      //browser = this.iab.create(item.url, '_system');
-    }
-    //
+  download(item) {
+    const browser = this.iab.create(item.url, '_system');
+    
+    browser.close();
   }
 
-  async popAlert(item) {
-    this.scheduleService.getCronograma().then((d)=>{
-      this.atividade = JSON.parse(d).filter((a) => {
-        return a.pk == item.pk;
-      });
+  downloadAll(item){
+    this.filteredTrabalhos.forEach(t => {
+      console.log(t);
+      const browser = this.iab.create(t.url, '_system');
 
-
-    })
-    const alert = await this.alertController.create({
-      header: this.atividade.titulo,
-      message: "icone-loca" + this.atividade.local + "<br>ic-hora: " + this.atividade.hora,
-      buttons: [
-        {
-          text: 'trabalhos relacionados',
-          role: 'others',
-          cssClass: 'popUpSearch buttonPopUp2',
-          handler: (blah) => {
-            console.log('Confirm Cancel: nah');
-          }
-        },
-        {
-          text: 'baixar este trabalho',
-          role: 'others',
-          cssClass: 'popUpSearch buttonPopUp3',
-          handler: () => {
-            this.download(item);
-          }
-
-        },
-        {
-          text: 'baixar todos trabalhos',
-          role: 'others',
-          cssClass: 'popUpSearch buttonPopUp3',
-          handler: () => {
-
-            this.download(this.filteredTrabalhos);
-          }
-
-        },
-        {
-          text: 'voltar',
-          role: 'voltar',
-          cssClass: 'popUpSearch buttonPopUp1',
-
-
-          handler: () => {
-            console.log('Confirm Okay');
-          }
-        }
-      ]
+      browser.close();
     });
-
-    await alert.present();
-    let result = await alert.onDidDismiss();
-    console.log(result);
   }
 
+ 
   searchData($event) {
     this.filteredTrabalhos = this.trabalhos.filter((it) => {
       return it.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1 ||
-      it.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1
+      it.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1 || (this.searchInput.toLowerCase() == ("mesa " + it.mesa)) || (this.searchInput.toLowerCase() == (it.mesa)) 
     })
 
-    this.filteredFav = this.trabalhos.filter((it) => { 
-      return (it.titulo.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1 ||
-      it.autores.toLowerCase().indexOf(this.searchInput.toLowerCase()) > -1) && it.favorito
+    this.filteredFav = this.filteredTrabalhos.filter((it) => { 
+      return it.favorito
     })
   }
 
+  getMesa(id: number){
+    return this.mesas.filter(m => {
+      if(m.numero == id)
+        return m;
+    })[0]
+  }
+
+  getAtividade(id: number){
+    return this.cronograma[0].dias.filter(d => {
+      d.atividades.forEach(at => {
+        console.log(at)
+        console.log(at.mesas.indexOf(id))
+        if(at.mesas.indexOf(id) > -1)
+          console.log("retornou ue");
+          return at;
+      });
+    });
+  }
+
+  changeOrderBy(){
+    let index = this.orderByOptions.indexOf(this.orderBy, 0);
+    index++;
+    if(index >= this.orderByOptions.length ){
+      index = 0;
+    }
+    this.orderBy = this.orderByOptions[index];
+    console.log(this.orderBy);
+  }
+
   async infoTrabalho(item) {
+    this.mesa = this.getMesa(item.mesa);
+    console.log(this.mesa);
+    this.atividade = this.getAtividade(this.mesa.numero);
+    console.log(this.atividade);
     const actionSheet = await this.actionSheetController.create({
-      header: 'Atividade',
+      header: 'Mesa ' + item.mesa + " às " + this.atividade.hora,
       buttons: [
         {
           text: 'Trabalhos relacionados',
           icon: 'albums',
           handler: () => {
-            console.log('Play clicked');
+            this.searchInput = "Mesa " + item.mesa;
           }
         },
         {
           text: 'Baixar trabalhos mesa',
           icon: 'document',
           handler: () => {
-            console.log('Share clicked');
+            this.searchInput = "Mesa " + item.mesa;
+            console.log(this.filteredTrabalhos);
+            this.downloadAll(item);
           }
         },
       {
         text: 'Baixar este trabalho',
-        role: 'destructive',
         icon: 'download',
         handler: () => {
-          console.log('Delete clicked');
-        }
-      }, {
-        text: 'Cancel',
-        icon: 'close',
-        role: 'cancel',
-        handler: () => {
-          console.log('Cancel clicked');
-        }
-      }]
-    });
-    await actionSheet.present();
-  }
-
-  async infoSearch() {
-    const actionSheet = await this.actionSheetController.create({
-      header: 'Configurações de busca',
-      buttons: [
-        {
-          text: 'Ordenar por: ' + this.orderBy,
-          icon: 'albums',
-          handler: () => {
-            let index = this.orderByOptions.indexOf(this.orderBy, 0);
-            index++;
-            if(index >= this.orderByOptions.length ){
-              index = 0;
-            }
-            this.orderBy = this.orderByOptions[index];
-            console.log(this.orderBy);
-            this.infoSearch();
-          }
-        },
-        {
-          text: 'Baixar trabalhos mesa',
-          icon: 'document',
-          handler: () => {
-            console.log('Share clicked');
-          }
-        },
-      {
-        text: 'Baixar este trabalho',
-        role: 'destructive',
-        icon: 'download',
-        handler: () => {
-          console.log('Delete clicked');
+          this.download(item);
         }
       }, {
         text: 'Cancel',

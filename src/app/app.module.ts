@@ -14,6 +14,7 @@ import { AuthGuardService } from './guards/auth-guard.service';
 import { IonicStorageModule } from '@ionic/storage';
 import { HTTP } from '@ionic-native/http/ngx';
 import { Network } from '@ionic-native/network/ngx';
+import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
 
 @NgModule({
   declarations: [AppComponent],
@@ -28,6 +29,7 @@ import { Network } from '@ionic-native/network/ngx';
     Network,
     HTTP,
     AuthGuardService,
+    InAppBrowser,
   ],
   bootstrap: [AppComponent]
 })

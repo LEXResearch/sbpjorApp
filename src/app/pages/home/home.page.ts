@@ -20,15 +20,26 @@ export class HomePage implements OnInit {
   atividade: any;
   mesas: any = [];
 
+  controller: any;
+
 
   loading: any;
 
-  slideOpts = {
+  slideOpts2 = {
     speed: 1000,
     centeredSlides: true,
     slidesPerView: 1,
-    spaceBetween: 100
+    spaceBetween: 100,
+    controller: {
+      control: this.controller,
+    }
   };
+
+  slideOpts1 = {
+    controller: {
+      control: this.controller,
+    }
+  }
 
   dataReturned:any;
 

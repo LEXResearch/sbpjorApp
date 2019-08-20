@@ -8,16 +8,27 @@
 
 <ion-content>
   <ion-grid no-padding> 
-      <ion-slides options="slideOpts"> 
+      <!-- <ion-slides options="slideOpts1">
+        <ion-slide *ngFor="let dia of cronograma[0].dias">
+            <ion-row justify-content-center class="ion-padding-bottom">
+                <ion-col size=4 align-self-center class="highlight tamDayBox">
+                    <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
+                    <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
+                </ion-col>
+              </ion-row>
+        </ion-slide>
+      </ion-slides> -->
+
+      <ion-slides options="slideOpts2"> 
         <ion-slide *ngFor="let dia of cronograma[0].dias">
           <ion-list lines="none" style="width: 100%;">
-
-            <ion-row justify-content-center class="ion-padding-bottom">
-              <ion-col size=4 align-self-center class="highlight tamDayBox">
-                  <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
-                  <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
-              </ion-col>
-            </ion-row>
+              <ion-row justify-content-center class="ion-padding-bottom">
+                  <ion-col size=4 align-self-center class="highlight tamDayBox">
+                      <ion-row justify-content-center class="number-active">{{ dia.dia }} </ion-row>
+                      <ion-row justify-content-center class="text-active">{{ dia.semana }}</ion-row>
+                  </ion-col>
+                </ion-row>
+            
 
             <ion-row  class="ion-margin-top" *ngFor="let atividade of dia.atividades" [ngStyle]=backgroundColor(atividade.categoria)>
 
