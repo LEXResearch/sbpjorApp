@@ -3,10 +3,23 @@
 // }
 
 ion-img{
-
+    display: block;
+    margin-left: auto;
+    margin-right: auto
+}
+.imgSobre1{
+    width: 50%;
+}
+.imgSobre2{
+    width: 30%;
+    padding-bottom: 4%;
+}
+.imgSobre3{
     width: 40%;
 }
-
+ion-card-header{
+    text-align: center;
+}
 
 // page-about {
 //     .about{

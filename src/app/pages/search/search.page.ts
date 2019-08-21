@@ -94,6 +94,7 @@ export class SearchPage implements OnInit {
 
   async presentLoadingWithOptions() {
     this.loading = await this.loadingController.create({
+      duration: 5000,
       cssClass: 'custom-class custom-loading'
     });
     return await this.loading.present();
