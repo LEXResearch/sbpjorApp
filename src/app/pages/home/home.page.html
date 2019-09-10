@@ -4,9 +4,13 @@
       <ion-menu-button autoHide="false"></ion-menu-button>
     </ion-buttons>
   </ion-toolbar>
+ 
+
 </ion-header>
 
 <ion-content>
+  
+ 
   <ion-grid no-padding> 
       <!-- <ion-slides options="slideOpts1">
         <ion-slide *ngFor="let dia of cronograma[0].dias">
@@ -65,6 +69,31 @@
         </ion-slide>
       </ion-slides> 
 
+ <!-- <ion-button (click)="Show()">here</ion-button> -->
+
+ <!-- <img id="imgGif" style="width:5px" class="animated infinite fadeOutRight" src="/assets/icon/hand.svg"> -->
+ <img id="imgGif" style="width:8vh" class="animated fadeOutLeft" src="/assets/icon/hand.png">
+
+
+<style>
+
+  #imgGif{
+    position: absolute;
+    left: 40vh;
+    top: 8vh;
+    z-index: 9999;
+    --ion-color-base: #58595b;
+  }
+  
+  
+  #imgGif{
+    animation-duration: 3s;
+    animation-delay: 2s;
+    animation-iteration-count: 5;
+  }
+ 
+  
+</style>
 
 </ion-grid>
 </ion-content>

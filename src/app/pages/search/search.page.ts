@@ -38,8 +38,8 @@ export class SearchPage implements OnInit {
   switcher: number;
   searchInput: string;
 
-  orderBy: string = 'título (cresc)';
-  orderByOptions: Array<string> = ['título (cresc)', 'título (descr)', 'número (cresc)', 'número (descr)', 'autor (cresc)', 'autor (descr)'];
+  orderBy: string = 'Título (A-Z)';
+  orderByOptions: Array<string> = ['Título (A-Z)', 'Título (Z-A)', 'Número (cresc)', 'Número (descr)', 'Autor (A-Z)', 'Autor (Z-A)'];
 
   constructor(public actionSheetController: ActionSheetController,
               private scheduleService: ScheduleService,
@@ -121,7 +121,7 @@ export class SearchPage implements OnInit {
   }
 
   download(item) {
-    const browser = this.iab.create(item.url, '_system');
+    const browser = this.iab.create("https://google.com", '_system');
     
     browser.close();
   }
@@ -166,6 +166,46 @@ export class SearchPage implements OnInit {
     });
   }
 
+  reOrder(order){
+    switch(order){
+      case 'Título (A-Z)':
+        this.trabalhos.sort((a, b) => {
+          return a.titulo.localeCompare(b.titulo)
+        }
+          
+        );
+        break;
+      case 'Título (Z-A)':
+          this.trabalhos.sort((a, b) => {
+            return b.titulo.localeCompare(a.titulo)
+          });
+        break;
+      case 'Número (cresc)':
+         
+          this.trabalhos.sort((a, b) =>
+            a.numero - b.numero
+          );
+          console.log(this.trabalhos);
+        break;
+      case 'Número (descr)':
+          this.trabalhos.sort((a, b) =>
+            b.numero - a.numero
+          );
+          console.log(this.trabalhos);
+        break;
+      case 'Autor (A-Z)':
+          this.trabalhos.sort((a, b) => {
+            return a.autores.localeCompare(b.autores)
+          });
+        break;
+      case 'Autor (Z-A)':
+          this.trabalhos.sort((a, b) => {
+            return b.autores.localeCompare(a.autores)
+          });
+        break;
+    }
+  }
+
   changeOrderBy(){
     let index = this.orderByOptions.indexOf(this.orderBy, 0);
     index++;
@@ -173,6 +213,7 @@ export class SearchPage implements OnInit {
       index = 0;
     }
     this.orderBy = this.orderByOptions[index];
+    this.reOrder(this.orderBy);
     console.log(this.orderBy);
   }
 

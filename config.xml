@@ -91,5 +91,5 @@
     <allow-navigation href="http://192.168.184.238:8101" />
     <plugin name="cordova-plugin-inappbrowser" spec="^3.1.0" />
     <engine name="browser" spec="5.0.4" />
-    <engine name="android" spec="7.0.0" />
+    <engine name="android" spec="^8.0.0" />
 </widget>

@@ -9,6 +9,11 @@ import { DescriptionPage } from '../../modals/description/description.page';
 import { ScheduleService } from '../../services/schedule.service';
 import { LoadingController } from '@ionic/angular';
 
+//test Sweet alert
+//import  * as Sweet from '../../../assets/js/SweetAlert.js'; 
+//declare var Sweet: any;
+import Swal from 'sweetalert2';
+
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
@@ -35,6 +40,25 @@ export class HomePage implements OnInit {
     }
   };
 
+  //test
+  // selectedDay: number = 0;
+  
+  // slideChanged() {
+  //   if(this.selectedDay == 0){
+  //     this.selectedDay = 0;
+  //   }
+  //   if(this.selectedDay == 1){
+  //     this.selectedDay = this.selectedDay + 1;
+  //   }
+  //   if(this.selectedDay == 2){
+  //     this.selectedDay = this.selectedDay + 2;
+  //   } 
+  //   if(this.selectedDay == 3){
+  //     this.selectedDay = this.selectedDay + 3;
+  //   } 
+
+  // }
+
   slideOpts1 = {
     controller: {
       control: this.controller,
@@ -60,8 +84,34 @@ export class HomePage implements OnInit {
     this.plt.ready().then(() => {
       this.loadData(true);
     });
-    
+
+    //this.func1();
+  // Sweet();    
   }
+  
+  // public func1(){
+  //   // alert("Eu sou um alert!");
+  //   console.log("It enters");
+  //   Swal.fire({
+  //     title: 'Custom animation with Animate.css',
+  //     animation: false,
+  //     customClass: {
+  //       popup: 'animated tada'
+  //     }
+  //   })
+  // }
+
+  Show(){
+    Swal.fire({
+      title: 'Custom animation with Animate.css',
+      animation: false,
+      customClass: {
+        popup: 'animated tada'
+      }
+    })
+  }
+
+
 
   async presentToast(message) {
     const toast = await this.toastController.create({

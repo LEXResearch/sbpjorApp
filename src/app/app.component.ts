@@ -61,7 +61,6 @@ export class AppComponent {
     });
 
   }
-
   refresh(){
     this.userStatus = this.schedule.getStateVar();
     console.log(this.userStatus);

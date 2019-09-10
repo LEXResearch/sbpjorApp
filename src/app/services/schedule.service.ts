@@ -26,6 +26,12 @@ export class ScheduleService {
 
   constructor(private http: HTTP, private networkService: NetworkService, private localService: LocaldataService, private storage: Storage) { }
 
+  
+  ngOnInit() {
+ 
+  }
+  
+
   // make user authetication, recieve a token that is used for futher requests
   authetication(user: string, password: any, anonnymous: boolean){
     return new Promise((resolve, rjc) => {
