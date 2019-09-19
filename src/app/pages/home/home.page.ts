@@ -119,14 +119,14 @@ export class HomePage implements OnInit {
 
   vezes=0;
 
- 
+
 
 setValue(){
-  this.storage.set('countVezes', this.vezes++);
+  this.storage.set('name', this.vezes++);
 }
 getValue(){
-  this.storage.get('countVezes').then((countVezes)=>{
-    console.log('VAAAAAAAAAAAAAAL aqui '+ this.vezes);
+  this.storage.get('name').then((value:number)=>{
+    console.log('VAAAAAAAAAAAAAALUE aqui '+ value);
     // this.countVezes++;
     // console.log('novo countVezes ' +this.countVezes);
 
@@ -135,25 +135,12 @@ getValue(){
       console.log("PELAMOR DE DEUS FUNCIONA");
       alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
     }else{
-      console.log("ou aqui");
+      console.log("Ainda nao tem 4");
     }
 
   })
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 
 
