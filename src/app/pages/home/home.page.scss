@@ -94,6 +94,26 @@
 }
 
 
+#imgGif{
+  position: absolute;
+  left: 40vh;
+  top: 8vh;
+  z-index: 9999;
+  --ion-color-base: #58595b;
+}
+
+
+#imgGif{
+  animation-duration: 3s;
+  animation-delay: 2s;
+  animation-iteration-count: 5;
+  transition: 5s ease-in-out;
+}
+
+
+
+
+
 // ion-list.ios.list-ios.list-lines-none.list-ios-lines-none.hydrated {
 //   width: 100%;
 //   /* padding: 0px; */

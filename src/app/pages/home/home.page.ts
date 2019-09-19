@@ -9,10 +9,10 @@ import { DescriptionPage } from '../../modals/description/description.page';
 import { ScheduleService } from '../../services/schedule.service';
 import { LoadingController } from '@ionic/angular';
 
-//test Sweet alert
-//import  * as Sweet from '../../../assets/js/SweetAlert.js'; 
-//declare var Sweet: any;
 import Swal from 'sweetalert2';
+
+import { Storage } from '@ionic/storage';
+
 
 @Component({
   selector: 'app-home',
@@ -27,6 +27,10 @@ export class HomePage implements OnInit {
 
   controller: any;
 
+// count para o gif
+  count=0;
+  countVezes=0;
+
 
   loading: any;
 
@@ -40,24 +44,6 @@ export class HomePage implements OnInit {
     }
   };
 
-  //test
-  // selectedDay: number = 0;
-  
-  // slideChanged() {
-  //   if(this.selectedDay == 0){
-  //     this.selectedDay = 0;
-  //   }
-  //   if(this.selectedDay == 1){
-  //     this.selectedDay = this.selectedDay + 1;
-  //   }
-  //   if(this.selectedDay == 2){
-  //     this.selectedDay = this.selectedDay + 2;
-  //   } 
-  //   if(this.selectedDay == 3){
-  //     this.selectedDay = this.selectedDay + 3;
-  //   } 
-
-  // }
 
   slideOpts1 = {
     controller: {
@@ -76,30 +62,100 @@ export class HomePage implements OnInit {
     public modalController: ModalController,
     public loadingController: LoadingController,
     public toastController: ToastController,
+    public storage: Storage,
 
-  ) { }
+  ) { 
+
+   this.setValue()
+   this.getValue()
+
+  }
 
   ngOnInit() {
     this.presentLoadingWithOptions();
     this.plt.ready().then(() => {
       this.loadData(true);
+      // this.naoMostraMais();
+
+      // this.storage.set('countVezes', this.vezes++);
+     
+      // this.storage.get('countVezes').then((countVezes)=>{
+      //   console.log('VAAAAAAAAAAAAAAL aqui '+ this.vezes);
+      //   // this.countVezes++;
+      //   // console.log('novo countVezes ' +this.countVezes);
+
+      // if( this.vezes > 3 ){
+      //     this.count++;
+      //     console.log("PELAMOR DE DEUS FUNCIONA");
+      //     alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+      //   }else{
+      //     console.log("ou aqui");
+      //   }
+
+      // })
+      
+
+
+
     });
 
-    //this.func1();
-  // Sweet();    
+ 
+  console.log('count inicio ' + this.count);
+  // console.log('count inicioVezes ' + this.countVezes);
+  console.log('VEZES AQUI PLZ = ' + this.vezes);
+
   }
-  
-  // public func1(){
-  //   // alert("Eu sou um alert!");
-  //   console.log("It enters");
-  //   Swal.fire({
-  //     title: 'Custom animation with Animate.css',
-  //     animation: false,
-  //     customClass: {
-  //       popup: 'animated tada'
-  //     }
-  //   })
+
+  // naoMostraMais(){
+  //   this.getValue();
   // }
+
+  addCount(){
+    this.count++;
+    console.log('count ' +  this.count);
+    // console.log('ecoisas '+ this.getValue());
+  }
+ 
+
+  vezes=0;
+
+ 
+
+setValue(){
+  this.storage.set('countVezes', this.vezes++);
+}
+getValue(){
+  this.storage.get('countVezes').then((countVezes)=>{
+    console.log('VAAAAAAAAAAAAAAL aqui '+ this.vezes);
+    // this.countVezes++;
+    // console.log('novo countVezes ' +this.countVezes);
+
+  if( this.vezes > 3 ){
+      this.count++;
+      console.log("PELAMOR DE DEUS FUNCIONA");
+      alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+    }else{
+      console.log("ou aqui");
+    }
+
+  })
+  
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
   Show(){
     Swal.fire({
