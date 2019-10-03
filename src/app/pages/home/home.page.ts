@@ -75,74 +75,48 @@ export class HomePage implements OnInit {
     this.presentLoadingWithOptions();
     this.plt.ready().then(() => {
       this.loadData(true);
-      // this.naoMostraMais();
-
-      // this.storage.set('countVezes', this.vezes++);
-     
-      // this.storage.get('countVezes').then((countVezes)=>{
-      //   console.log('VAAAAAAAAAAAAAAL aqui '+ this.vezes);
-      //   // this.countVezes++;
-      //   // console.log('novo countVezes ' +this.countVezes);
-
-      // if( this.vezes > 3 ){
-      //     this.count++;
-      //     console.log("PELAMOR DE DEUS FUNCIONA");
-      //     alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-      //   }else{
-      //     console.log("ou aqui");
-      //   }
-
-      // })
-      
-
-
-
     });
-
- 
-  console.log('count inicio ' + this.count);
-  // console.log('count inicioVezes ' + this.countVezes);
-  console.log('VEZES AQUI PLZ = ' + this.vezes);
-
+  // console.log('count inicio ' + this.count);
+  // console.log('VEZES AQUI PLZ = ' + this.vezes);
   }
-
-  // naoMostraMais(){
-  //   this.getValue();
-  // }
-
   addCount(){
     this.count++;
     console.log('count ' +  this.count);
-    // console.log('ecoisas '+ this.getValue());
   }
- 
 
-  vezes=0;
-
-
-
+  vezes:1;
 setValue(){
-  this.storage.set('name', this.vezes++);
+  this.vezes++;
+  this.storage.set('name', this.vezes);
 }
 getValue(){
-  this.storage.get('name').then((value:number)=>{
-    console.log('VAAAAAAAAAAAAAALUE aqui '+ value);
-    // this.countVezes++;
-    // console.log('novo countVezes ' +this.countVezes);
+  // this.storage.get('name').then((value:number)=>{
+  //   console.log('VAAAAAAAAAAAAAALUE aqui '+ value);
+  //   // this.countVezes++;
+  //   // console.log('novo countVezes ' +this.countVezes);
 
-  if( this.vezes > 3 ){
-      this.count++;
-      console.log("PELAMOR DE DEUS FUNCIONA");
-      alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
-    }else{
-      console.log("Ainda nao tem 4");
+  // if( this.vezes > 3 ){
+  //     this.count++;
+  //     console.log("PELAMOR DE DEUS FUNCIONA");
+  //     alert("OAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA");
+  //   }else{
+  //     console.log("Ainda nao tem 4");
+  //   }
+  // })
+
+  this.storage.get('first_time').then((val) => {
+    if (val !== null) {
+       console.log('app isnt for the first time started');
+      //  alert('others');
+       this.count++;
+    } else {
+       console.log('probably the first time');
+          this.storage.set('first_time', 'done');
+          // alert('FIRST');
     }
+ });
 
-  })
-  
 }
-
-
 
   Show(){
     Swal.fire({

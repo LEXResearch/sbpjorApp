@@ -20,7 +20,9 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   declarations: [AppComponent],
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
-    IonicStorageModule.forRoot(),
+    IonicStorageModule.forRoot(
+      {name2 : 1}
+    ),
     ],
   providers: [
     StatusBar,
