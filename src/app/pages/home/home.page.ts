@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 
 import { ToastController } from '@ionic/angular';
 
-import { DescriptionPage } from '../../modals/description/description.page';
+import { DescriptionPage } from '../description/description.page';
 
 import { ScheduleService } from '../../services/schedule.service';
 import { LoadingController } from '@ionic/angular';
