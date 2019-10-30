@@ -21,7 +21,7 @@ import { InAppBrowser } from '@ionic-native/in-app-browser/ngx';
   entryComponents: [],
   imports: [BrowserModule, IonicModule.forRoot(), AppRoutingModule,
     IonicStorageModule.forRoot(
-      {name2 : 1}
+      // {name2 : 1}
     ),
     ],
   providers: [

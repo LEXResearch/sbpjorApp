@@ -7,20 +7,12 @@ import { IonicModule } from '@ionic/angular';
 
 import { DescriptionPage } from './description.page';
 
-const routes: Routes = [
-  {
-    path: '',
-    component: DescriptionPage,
-
-  }
-];
 
 @NgModule({
   imports: [
     CommonModule,
     FormsModule,
-    IonicModule,
-    RouterModule.forChild(routes)
+    IonicModule
   ],
   declarations: [DescriptionPage],
   exports: [DescriptionPage]

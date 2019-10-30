@@ -25,6 +25,6 @@ const routes: Routes = [
     DescriptionPageModule
   ],
   declarations: [HomePage],
-  entryComponents: []
+  entryComponents: [DescriptionPage]
 })
 export class HomePageModule {}
